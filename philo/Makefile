@@ -6,7 +6,7 @@
 #    By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 22:41:02 by nfukuma           #+#    #+#              #
-#    Updated: 2022/09/21 14:17:19 by nfukuma          ###   ########.fr        #
+#    Updated: 2022/09/26 15:45:53 by nfukuma          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
 
 # for *.c set up
-SRCS_NAME	=	main.c
+SRCS_NAME	=	main.c validate_arg.c set_struct.c each_philo_routine.c monitor_philo_routine.c util.c
 SRCS_DIR	=	./srcs/
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_NAME))
 
@@ -34,7 +34,7 @@ all : $(OBJ_DIR) $(NAME)
 $(OBJ_DIR):
 	mkdir -p obj
 
-$(OBJS) : $(SRCS)
+$(OBJ_DIR)%.o : $(SRCS_DIR)%.c
 	$(CC) $(CFLAGS) $(INCLUDE_DIR) -c -o $@ $<
 
 $(NAME):	$(OBJS)
