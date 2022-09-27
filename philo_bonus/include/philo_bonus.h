@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 00:29:56 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 01:24:02 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ typedef struct s_each_philo
 /* each_philo_routine.c */
 void				*each_philo_routine(void *arg_each_philo_struct);
 
-/* monitor_philos_routine.c */
-void				*monitor_philos_routine(void *arg);
-void				*monitor_must_eat(void *arg);
+/* moni_philos_routine.c */
+void				*moni_philos_routine(void *arg);
+void				*moni_must_eat(void *arg);
 
 /* in util.c */
 void				util_put_error_msg_exit(char *err_msg);

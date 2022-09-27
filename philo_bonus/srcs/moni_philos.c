@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor_philos.c                                   :+:      :+:    :+:   */
+/*   moni_philos.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,7 +14,7 @@
 
 static bool	check_last_eat_time(t_each_philo *each, struct timeval now);
 
-void	*monitor_philos_routine(void *arg)
+void	*moni_philos_routine(void *arg)
 {
 	struct timeval	now;
 	t_each_philo	*each;
@@ -38,7 +38,7 @@ void	*monitor_philos_routine(void *arg)
 	}
 }
 
-void	*monitor_must_eat(void *arg)
+void	*moni_must_eat(void *arg)
 {
 	int			i;
 	t_philo_env	*philo_env;

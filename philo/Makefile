@@ -6,7 +6,7 @@
 #    By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 22:41:02 by nfukuma           #+#    #+#              #
-#    Updated: 2022/09/27 12:23:34 by nfukuma          ###   ########.fr        #
+#    Updated: 2022/09/28 01:24:02 by nfukuma          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
 
 # for *.c set up
-SRCS_NAME	=	main.c each_philo_routine.c monitor_philos_routine.c util.c
+SRCS_NAME	=	main.c each_philo_routine.c moni_philos_routine.c util.c
 SRCS_DIR	=	./srcs/
 SRCS		=	$(addprefix $(SRCS_DIR), $(SRCS_NAME))
 

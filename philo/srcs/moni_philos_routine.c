@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor_philos_routine.c                           :+:      :+:    :+:   */
+/*   moni_philos_routine.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 23:12:52 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 00:32:58 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 01:22:29 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,21 @@
 
 static bool	check_last_eat_time(t_each_philo *each, struct timeval now);
 
-void	*monitor_philos_routine(void *arg_each_philo_struct_arry)
+bool	start_monitar_thread(pthread_t *moni_thread, t_each_philo	*each)
+{
+	if (pthread_create(moni_thread, NULL,
+			moni_philos_routine, each))
+		return (true);
+	return (false);
+}
+
+void	*moni_philos_routine(void *arg_each_philo_structarry)
 {
 	struct timeval	now;
 	t_each_philo	*each;
 	long			i;
 
-	each = arg_each_philo_struct_arry;
+	each = arg_each_philo_structarry;
 	i = -1;
 	while (true)
 	{

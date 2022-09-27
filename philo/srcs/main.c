@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 01:00:31 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 01:38:08 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,27 @@ int	main(int ac, char **av)
 {
 	char			*err_msg;
 	t_philo_env		philo_env;
-	t_each_philo	*each_philo_struct_ptr;
-	pthread_t		monitor_philos_thread;
+	t_each_philo	*each_philo_struct;
+	pthread_t		moni_thread;
 
 	if (validate_arg(ac, av))
 		return (1);
 	set_struct_philo_env(av, &philo_env);
-	each_philo_struct_ptr = set_struct_each_philo(&philo_env);
-	if (!each_philo_struct_ptr)
-		printf("\e[31mError: Memory allocation in set each philo struct.\e[m");
-	else if (pthread_create(&monitor_philos_thread, NULL,
-			monitor_philos_routine, each_philo_struct_ptr))
+	each_philo_struct = set_struct_each_philo(&philo_env);
+	if (!each_philo_struct)
+		printf("\e[31mError: Memory allocation.\e[m");
+	else if (start_monitar_thread(&moni_thread, each_philo_struct))
 		printf("\e[31mError: create pthread.\e[m");
 	else
 	{
-		err_msg = start_each_philo_threads(each_philo_struct_ptr);
+		err_msg = start_each_philo_threads(each_philo_struct);
 		if (err_msg)
 			printf("%s", err_msg);
-		else if (pthread_join(monitor_philos_thread, NULL))
+		else if (pthread_join(moni_thread, NULL))
 			printf("\e[31mError: join pthread.\e[m");
-		else
-			return (0);
 	}
-	return (1);
+	util_all_free(each_philo_struct);
+	return (0);
 }
 
 static bool	validate_arg(int ac, char **av)
@@ -119,20 +117,19 @@ static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)
 static char	*start_each_philo_threads(t_each_philo *each)
 {
 	int			i;
-	pthread_t	*each_philo_thread;
 
-	each_philo_thread = malloc(sizeof(pthread_t)
+	each->philo_env->each_philo_thread = malloc(sizeof(pthread_t)
 			* each->philo_env->num_of_philo);
-	if (!each_philo_thread)
+	if (!each->philo_env->each_philo_thread)
 		return ("Error: Memory allocation in pthread_t.");
 	i = -1;
 	while (++i < each->philo_env->num_of_philo)
-		if (pthread_create(&each_philo_thread[i], NULL, each_philo_routine,
+		if (pthread_create(&each->philo_env->each_philo_thread [i], NULL, each_philo_routine,
 				&each[i]))
 			return ("Error: create pthread.");
 	i = -1;
 	while (++i < each->philo_env->num_of_philo)
-		if (pthread_join(each_philo_thread[i], NULL))
+		if (pthread_join(each->philo_env->each_philo_thread [i], NULL))
 			return ("Error: join pthread.");
 	return (NULL);
 }

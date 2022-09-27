@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 01:01:47 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 01:36:48 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,11 @@ bool	util_check_fin(t_each_philo *each)
 	}
 	pthread_mutex_unlock(&(each->philo_env->must_eat_mutex_t));
 	return (false);
+}
+
+void	util_all_free(t_each_philo	*each)
+{
+	free(each->right_side_fork);
+	free(each->philo_env->each_philo_thread);
+	free(each);
 }
