@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/27 15:53:37 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 00:32:11 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	util_atoi(char *str)
 	{
 		if (!('0' <= *str && *str <= '9'))
 			return (-1);
-		if (INT_MAX / 10 - (*str - '0')  < ret)
+		if (INT_MAX / 10 - (*str - '0') < ret)
 			return (-1);
 		ret = ret * 10 + (*str - '0');
 		str++;

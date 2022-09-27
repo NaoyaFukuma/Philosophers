@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 00:27:43 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 00:33:32 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int ac, char **av)
 	set_struct_philo_env(av, &philo_env);
 	each_philo_struct_ptr = set_struct_each_philo(&philo_env);
 	if (!each_philo_struct_ptr)
-		util_put_error_msg_exit("Error: Memory allocation in set each philo struct.");
+		util_put_error_msg_exit("Error: Memory allocation.");
 	if (exe_each_philo_process(each_philo_struct_ptr))
 		util_put_error_msg_exit("Error: fork");
 	if (pthread_create(&monitor_philos_thread, NULL, monitor_must_eat,
@@ -78,7 +78,9 @@ static void	set_struct_philo_env(char **av, t_philo_env *philo_env)
 	philo_env->print_sem = sem_open(PRINTF_SEM_NAME, O_CREAT, S_IRWXG, 1);
 	sem_unlink(MUST_EAT_ACHIEVE_SEM_NAME);
 	philo_env->must_eat_achieve_sem = sem_open(MUST_EAT_ACHIEVE_SEM_NAME,
-			O_CREAT, S_IRWXG, 0);
+												O_CREAT,
+												S_IRWXG,
+												0);
 }
 
 static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)

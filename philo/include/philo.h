@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/27 16:22:56 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 00:31:57 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include <limits.h>   // for INT_MAX
 # include <stdbool.h>  // bool
-# include <pthread.h>  // for pthread_create, detach, join, init, destroy, lock,unlock
+# include <pthread.h>  // for pthread_create, detach, join, init, destroy,
+						//lock,unlock
 # include <stdbool.h>  // for type bool
 # include <stdio.h>    //  for printf
 # include <stdlib.h>   // for malloc, free

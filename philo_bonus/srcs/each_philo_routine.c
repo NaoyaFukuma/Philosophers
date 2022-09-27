@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 00:28:05 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 00:33:10 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	sleep_philo(t_each_philo *each)
 	gettimeofday(&now, NULL);
 	util_put_log(each, BLUE, now.tv_sec * 1000000 + now.tv_usec, SLEEPING);
 	util_wait_usleep((now.tv_sec * 1000000 + now.tv_usec),
-						each->philo_env->time_to_sleep);
+			each->philo_env->time_to_sleep);
 	return (OTHER_PHILO_ALIVE);
 }
 
