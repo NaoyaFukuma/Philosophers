@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 00:31:57 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 00:59:34 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct s_philo_env
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat;
+	int				must_eat_achive_count;
+	pthread_mutex_t	must_eat_mutex_t;
 	bool			finish_flag;
 	pthread_mutex_t	fin_flag_mutex_t;
 	pthread_mutex_t	printf_mutex_t;
