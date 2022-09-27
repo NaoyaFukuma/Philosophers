@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 01:10:09 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 01:58:25 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,4 @@ void	util_wait_usleep(long start_time_us, long wait_time_ms)
 			break ;
 	}
 	return ;
-}
-
-void	all_free()
-{
-
 }

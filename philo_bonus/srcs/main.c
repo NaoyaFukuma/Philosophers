@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 01:24:02 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 01:59:06 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int ac, char **av)
 	waitpid(-1, NULL, 0);
 	kill(0, SIGINT);
 	pthread_join(moni_thread, NULL);
-	return (0);
+	exit (EXIT_SUCCESS);
 }
 
 static char	*validate_arg(int ac, char **av)
