@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/27 09:39:27 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/27 13:16:19 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define PHILO_H
 
 # include <limits.h>   // for INT_MAX
-# include <pthread.h>  // for pthread_create, detach, join, init, destroy,
-	lock,unlock
+# include <pthread.h>  // for pthread_create, detach, join, \
+						init, destroy, lock,unlock
 # include <stdbool.h>  // for type bool
 # include <stdio.h>    //  for printf
 # include <stdlib.h>   // for malloc, free
@@ -50,8 +50,8 @@ typedef struct s_philo_env
 	int				time_to_sleep;
 	int				must_eat;
 	bool			finish_flag;
-	pthread_mutex_t	finish_flag_mutex_t;
-	pthread_mutex_t	print_mutex_t;
+	pthread_mutex_t	fin_flag_mutex_t;
+	pthread_mutex_t	printf_mutex_t;
 	long			initial_us;
 }					t_philo_env;
 
@@ -66,13 +66,6 @@ typedef struct s_each_philo
 	pthread_mutex_t	last_eat_mutex_t;
 }					t_each_philo;
 
-/* in validate.c */
-char				*validate_arg(int ac, char **av);
-
-/* in set_struct.c */
-void				set_struct_philo_env(char **av, t_philo_env *philo_env);
-t_each_philo		*set_struct_each_philo(t_philo_env *philo_env);
-
 /* each_philo_routine.c */
 void				*each_philo_routine(void *arg_each_philo_struct);
 
@@ -85,6 +78,6 @@ int					util_atoi(char *str);
 void				util_put_log(t_each_philo *each, char *color,
 						long time_stamp, char *msg);
 void				util_wait_usleep(long start_time_us, long wait_time_ms);
-bool				util_check_finish(t_each_philo *each);
+bool				util_check_fin(t_each_philo *each);
 
 #endif

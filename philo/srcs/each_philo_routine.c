@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/26 13:17:20 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/27 13:14:36 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	*each_philo_routine(void *arg_each_philo_struct)
 	t_each_philo	*each;
 
 	each = arg_each_philo_struct;
-	if (each->philo_id_num % 2 == 1)
-		usleep(20);
+	if (each->philo_id_num % 2 == 0)
+		usleep(50);
 	while (true)
 	{
 		if (take_fork_philo(each) == OTHER_PHILO_DEAD)
@@ -76,9 +76,9 @@ static int	eat_philo(t_each_philo *each)
 	each->eat_count++;
 	if (each->eat_count == each->philo_env->must_eat)
 	{
-		pthread_mutex_lock(&(each->philo_env->finish_flag_mutex_t));
+		pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
 		each->philo_env->finish_flag = 1;
-		pthread_mutex_unlock(&(each->philo_env->finish_flag_mutex_t));
+		pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
 	}
 	pthread_mutex_unlock(each->left_side_fork);
 	pthread_mutex_unlock(each->right_side_fork);
@@ -89,13 +89,13 @@ static int	sleep_philo(t_each_philo *each)
 {
 	struct timeval	now;
 
-	pthread_mutex_lock(&(each->philo_env->finish_flag_mutex_t));
+	pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
 	if (each->philo_env->finish_flag == OTHER_PHILO_DEAD)
 	{
-		pthread_mutex_unlock(&(each->philo_env->finish_flag_mutex_t));
+		pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
 		return (OTHER_PHILO_DEAD);
 	}
-	pthread_mutex_unlock(&(each->philo_env->finish_flag_mutex_t));
+	pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
 	gettimeofday(&now, NULL);
 	util_put_log(each, BLUE, now.tv_sec * 1000000 + now.tv_usec, SLEEPING);
 	util_wait_usleep((now.tv_sec * 1000000 + now.tv_usec),
@@ -107,13 +107,13 @@ static int	think_philo(t_each_philo *each)
 {
 	struct timeval	now;
 
-	pthread_mutex_lock(&(each->philo_env->finish_flag_mutex_t));
+	pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
 	if (each->philo_env->finish_flag == OTHER_PHILO_DEAD)
 	{
-		pthread_mutex_unlock(&(each->philo_env->finish_flag_mutex_t));
+		pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
 		return (OTHER_PHILO_DEAD);
 	}
-	pthread_mutex_unlock(&(each->philo_env->finish_flag_mutex_t));
+	pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
 	gettimeofday(&now, NULL);
 	util_put_log(each, WHITE, now.tv_sec * 1000000 + now.tv_usec, THINKING);
 	return (OTHER_PHILO_ALIVE);

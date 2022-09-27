@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/26 15:52:38 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/27 13:15:23 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	util_put_log(t_each_philo *each, char *color, long now_us, char *msg)
 	long	time_stamp;
 
 	time_stamp = (now_us - each->philo_env->initial_us) / 1000;
-	pthread_mutex_lock(&(each->philo_env->print_mutex_t));
+	pthread_mutex_lock(&(each->philo_env->printf_mutex_t));
 	printf("%s%ld %d%s\e[m\n", color, time_stamp, each->philo_id_num, msg);
-	pthread_mutex_unlock(&(each->philo_env->print_mutex_t));
+	pthread_mutex_unlock(&(each->philo_env->printf_mutex_t));
 	return ;
 }
 
@@ -63,20 +63,20 @@ void	util_wait_usleep(long start_time_us, long wait_time_ms)
 		usleep(5);
 		gettimeofday(&now, NULL);
 		now_us = now.tv_sec * 1000000 + now.tv_usec;
-		if (dest_time_us - 20 <= now_us)
+		if (dest_time_us - 10 <= now_us)
 			break ;
 	}
 	return ;
 }
 
-bool	util_check_finish(t_each_philo *each)
+bool	util_check_fin(t_each_philo *each)
 {
-	pthread_mutex_lock(&(each->philo_env->finish_flag_mutex_t));
+	pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
 	if (each->philo_env->finish_flag == OTHER_PHILO_DEAD)
 	{
-		pthread_mutex_unlock(&(each->philo_env->finish_flag_mutex_t));
+		pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
 		return (true);
 	}
-	pthread_mutex_unlock(&(each->philo_env->finish_flag_mutex_t));
+	pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
 	return (false);
 }
