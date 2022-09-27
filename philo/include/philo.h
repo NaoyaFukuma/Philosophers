@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 01:51:38 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 01:57:17 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,14 @@ void				*each_philo_routine(void *arg_each_philo_struct);
 /* moni_philos_routine.c */
 void				*moni_philos_routine(void *arg_each_philo_structarry);
 bool				start_monitar_thread(pthread_t *moni_thread,
-		t_each_philo *each);
+						t_each_philo *each);
 
 /* in util.c */
 int					util_atoi(char *str);
 void				util_put_log(t_each_philo *each, char *color,
-		long time_stamp, char *msg);
+						long time_stamp, char *msg);
 void				util_wait_usleep(long start_time_us, long wait_time_ms);
 bool				util_check_fin(t_each_philo *each);
-void				util_all_free(t_each_philo	*each);
-
+void				util_all_free(t_each_philo *each);
 
 #endif

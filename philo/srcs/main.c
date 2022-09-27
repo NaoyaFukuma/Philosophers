@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 01:38:08 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 01:57:34 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)
 
 static char	*start_each_philo_threads(t_each_philo *each)
 {
-	int			i;
+	int	i;
 
 	each->philo_env->each_philo_thread = malloc(sizeof(pthread_t)
 			* each->philo_env->num_of_philo);
@@ -124,12 +124,12 @@ static char	*start_each_philo_threads(t_each_philo *each)
 		return ("Error: Memory allocation in pthread_t.");
 	i = -1;
 	while (++i < each->philo_env->num_of_philo)
-		if (pthread_create(&each->philo_env->each_philo_thread [i], NULL, each_philo_routine,
-				&each[i]))
+		if (pthread_create(&each->philo_env->each_philo_thread[i], NULL,
+				each_philo_routine, &each[i]))
 			return ("Error: create pthread.");
 	i = -1;
 	while (++i < each->philo_env->num_of_philo)
-		if (pthread_join(each->philo_env->each_philo_thread [i], NULL))
+		if (pthread_join(each->philo_env->each_philo_thread[i], NULL))
 			return ("Error: join pthread.");
 	return (NULL);
 }
