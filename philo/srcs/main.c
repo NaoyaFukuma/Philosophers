@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/26 12:45:08 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/27 09:38:51 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int ac, char **av)
 	char			*err_msg;
 	t_philo_env		philo_env;
 	t_each_philo	*each_philo_struct_ptr;
-	pthread_t		monitor_philo_thread;
+	pthread_t		monitor_philos_thread;
 
 	err_msg = validate_arg(ac, av);
 	if (err_msg)
@@ -28,13 +28,13 @@ int	main(int ac, char **av)
 	each_philo_struct_ptr = set_struct_each_philo(&philo_env);
 	if (!each_philo_struct_ptr)
 		util_puterrormsg_exit("Error: Memory allocation in set each philo struct.");
-	if (pthread_create(&monitor_philo_thread, NULL, monitor_philo_routine,
+	if (pthread_create(&monitor_philos_thread, NULL, monitor_philos_routine,
 			each_philo_struct_ptr))
 		util_puterrormsg_exit("Error: create pthread.");
 	err_msg = start_each_philo_threads(each_philo_struct_ptr);
 	if (err_msg)
 		util_puterrormsg_exit(err_msg);
-	if (pthread_join(monitor_philo_thread, NULL))
+	if (pthread_join(monitor_philos_thread, NULL))
 		util_puterrormsg_exit("Error: join pthread.");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 01:03:39 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/26 12:46:32 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/26 16:52:44 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)
 				+ philo_env->num_of_philo - 1) % philo_env->num_of_philo];
 		each_philo_ptr[i].eat_count = 0;
 		each_philo_ptr[i].last_eat_time_us = philo_env->initial_us;
+		pthread_mutex_init(&each_philo_ptr[i].last_eat_mutex_t, NULL);
 	}
 	return (each_philo_ptr);
 }
