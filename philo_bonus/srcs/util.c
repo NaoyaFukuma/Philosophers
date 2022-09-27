@@ -6,11 +6,17 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/27 15:53:37 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 00:27:49 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
+
+void	util_put_error_msg_exit(char *err_msg)
+{
+	printf("\e[31m%s\e[m\n", err_msg);
+	exit(EXIT_FAILURE);
+}
 
 int	util_atoi(char *str)
 {
@@ -25,7 +31,7 @@ int	util_atoi(char *str)
 	{
 		if (!('0' <= *str && *str <= '9'))
 			return (-1);
-		if (INT_MAX / 10 - (*str - '0')  < ret)
+		if (INT_MAX / 10 - (*str - '0') < ret)
 			return (-1);
 		ret = ret * 10 + (*str - '0');
 		str++;
@@ -38,9 +44,9 @@ void	util_put_log(t_each_philo *each, char *color, long now_us, char *msg)
 	long	time_stamp;
 
 	time_stamp = (now_us - each->philo_env->initial_us) / 1000;
-	pthread_mutex_lock(&(each->philo_env->printf_mutex_t));
+	sem_wait(each->philo_env->print_sem);
 	printf("%s%ld %d%s\e[m\n", color, time_stamp, each->philo_id_num, msg);
-	pthread_mutex_unlock(&(each->philo_env->printf_mutex_t));
+	sem_post(each->philo_env->print_sem);
 	return ;
 }
 
@@ -61,16 +67,4 @@ void	util_wait_usleep(long start_time_us, long wait_time_ms)
 			break ;
 	}
 	return ;
-}
-
-bool	util_check_fin(t_each_philo *each)
-{
-	pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
-	if (each->philo_env->finish_flag == OTHER_PHILO_DEAD)
-	{
-		pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
-		return (true);
-	}
-	pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
-	return (false);
 }

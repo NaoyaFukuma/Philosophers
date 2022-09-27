@@ -6,16 +6,16 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/27 16:36:31 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 00:27:43 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
-static bool			validate_arg(int ac, char **av);
-static char			*start_each_philo_threads(t_each_philo *each);
+static char			*validate_arg(int ac, char **av);
 static void			set_struct_philo_env(char **av, t_philo_env *philo_env);
 static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env);
+static bool			exe_each_philo_process(t_each_philo *each);
 
 int	main(int ac, char **av)
 {
@@ -24,47 +24,37 @@ int	main(int ac, char **av)
 	t_each_philo	*each_philo_struct_ptr;
 	pthread_t		monitor_philos_thread;
 
-	if (validate_arg(ac, av))
-		return (1);
+	err_msg = validate_arg(ac, av);
+	if (err_msg)
+		util_put_error_msg_exit(err_msg);
 	set_struct_philo_env(av, &philo_env);
 	each_philo_struct_ptr = set_struct_each_philo(&philo_env);
 	if (!each_philo_struct_ptr)
-		printf("\e[31mError: Memory allocation in set each philo struct.\e[m");
-	else if (pthread_create(&monitor_philos_thread, NULL,
-				monitor_philos_routine, each_philo_struct_ptr))
-		printf("\e[31mError: create pthread.\e[m");
-	else
-	{
-		err_msg = start_each_philo_threads(each_philo_struct_ptr);
-		if (err_msg)
-			printf("%s", err_msg);
-		else if (pthread_join(monitor_philos_thread, NULL))
-			printf("\e[31mError: join pthread.\e[m");
-		else
-			return (0);
-	}
-	return (1);
+		util_put_error_msg_exit("Error: Memory allocation in set each philo struct.");
+	if (exe_each_philo_process(each_philo_struct_ptr))
+		util_put_error_msg_exit("Error: fork");
+	if (pthread_create(&monitor_philos_thread, NULL, monitor_must_eat,
+			&philo_env))
+		util_put_error_msg_exit("Error: create pthread.");
+	waitpid(-1, NULL, 0);
+	kill(0, SIGINT);
+	pthread_join(monitor_philos_thread, NULL);
+	return (0);
 }
 
-static bool	validate_arg(int ac, char **av)
+static char	*validate_arg(int ac, char **av)
 {
 	int	tmp_num;
 
 	if (ac < 5 || 6 < ac)
-	{
-		printf("\e[31mError: The number of invalid arguments.\n\e[m");
-		return (true);
-	}
+		return ("Error: The number of invalid arguments.\n");
 	while (*(++av))
 	{
 		tmp_num = util_atoi(*av);
 		if (tmp_num < 1)
-		{
-			printf("\e[31mError: Invalid argument.\n\e[m");
-			return (true);
-		}
+			return ("Error: Invalid argument.\n");
 	}
-	return (false);
+	return (NULL);
 }
 
 static void	set_struct_philo_env(char **av, t_philo_env *philo_env)
@@ -81,9 +71,14 @@ static void	set_struct_philo_env(char **av, t_philo_env *philo_env)
 		philo_env->must_eat = util_atoi(av[5]);
 	else
 		philo_env->must_eat = 0;
-	philo_env->finish_flag = false;
-	pthread_mutex_init(&philo_env->printf_mutex_t, NULL);
-	pthread_mutex_init(&philo_env->fin_flag_mutex_t, NULL);
+	sem_unlink(FORK_SEM_NAME);
+	philo_env->fork_sem = sem_open(FORK_SEM_NAME, O_CREAT, S_IRWXG,
+			philo_env->num_of_philo);
+	sem_unlink(PRINTF_SEM_NAME);
+	philo_env->print_sem = sem_open(PRINTF_SEM_NAME, O_CREAT, S_IRWXG, 1);
+	sem_unlink(MUST_EAT_ACHIEVE_SEM_NAME);
+	philo_env->must_eat_achieve_sem = sem_open(MUST_EAT_ACHIEVE_SEM_NAME,
+			O_CREAT, S_IRWXG, 0);
 }
 
 static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)
@@ -104,33 +99,34 @@ static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)
 	{
 		each_philo_ptr[i].philo_env = philo_env;
 		each_philo_ptr[i].philo_id_num = i + 1;
-		each_philo_ptr[i].right_side_fork = &fork_mutexs[i];
-		each_philo_ptr[i].left_side_fork = &fork_mutexs[(i
-				+ philo_env->num_of_philo - 1) % philo_env->num_of_philo];
 		each_philo_ptr[i].eat_count = 0;
 		each_philo_ptr[i].last_eat_time_us = philo_env->initial_us;
 		pthread_mutex_init(&each_philo_ptr[i].last_eat_mutex_t, NULL);
+		pthread_mutex_init(&each_philo_ptr[i].eat_count_mutex_t, NULL);
 	}
 	return (each_philo_ptr);
 }
 
-static char	*start_each_philo_threads(t_each_philo *each)
+static bool	exe_each_philo_process(t_each_philo *each)
 {
 	int			i;
-	pthread_t	*each_philo_thread;
+	pid_t		pid;
+	pthread_t	each_philo_thread;
 
-	each_philo_thread = malloc(sizeof(pthread_t)
-			* each->philo_env->num_of_philo);
-	if (!each_philo_thread)
-		return ("Error: Memory allocation in pthread_t.");
 	i = -1;
 	while (++i < each->philo_env->num_of_philo)
-		if (pthread_create(&each_philo_thread[i], NULL, each_philo_routine,
-				&each[i]))
-			return ("Error: create pthread.");
-	i = -1;
-	while (++i < each->philo_env->num_of_philo)
-		if (pthread_join(each_philo_thread[i], NULL))
-			return ("Error: join pthread.");
-	return (NULL);
+	{
+		pid = fork();
+		if (pid < 0)
+			return (true);
+		if (pid == 0)
+		{
+			if (pthread_create(&each_philo_thread, NULL, each_philo_routine,
+					&each[i]))
+				util_put_error_msg_exit("Error: create pthread.");
+			if (monitor_philos_routine(&each[i]))
+				exit(EXIT_SUCCESS);
+		}
+	}
+	return (false);
 }

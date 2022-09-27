@@ -1,45 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor_philos_routine.c                           :+:      :+:    :+:   */
+/*   monitor_philos.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 23:12:52 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/27 15:48:34 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 00:27:56 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 static bool	check_last_eat_time(t_each_philo *each, struct timeval now);
 
-void	*monitor_philos_routine(void *arg_each_philo_struct_arry)
+void	*monitor_philos_routine(void *arg)
 {
 	struct timeval	now;
 	t_each_philo	*each;
 	long			i;
 
-	each = arg_each_philo_struct_arry;
+	each = arg;
 	i = -1;
 	while (true)
 	{
-		if (++i == each->philo_env->num_of_philo)
-			i = 0;
-		if (util_check_fin(&each[i]))
-			return (NULL);
 		gettimeofday(&now, NULL);
-		if (check_last_eat_time(&each[i], now))
+		if (check_last_eat_time(each, now))
 		{
-			pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
-			each->philo_env->finish_flag = true;
-			pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
-			util_put_log(&each[i], RED, now.tv_sec * 1000000 + now.tv_usec,
-					DIED);
-			return (NULL);
+			util_put_log(each, RED, now.tv_sec * 1000000 + now.tv_usec, DIED);
+			sem_wait(each->philo_env->print_sem);
+			i = -1;
+			while (++i < each->philo_env->num_of_philo)
+				sem_post(each->philo_env->must_eat_achieve_sem);
+			return ("died");
 		}
 		usleep(50);
 	}
+}
+
+void	*monitor_must_eat(void *arg)
+{
+	int			i;
+	t_philo_env	*philo_env;
+
+	philo_env = arg;
+	i = -1;
+	while (++i < philo_env->num_of_philo)
+		sem_wait(philo_env->must_eat_achieve_sem);
+	sem_wait(philo_env->print_sem);
+	kill(0, SIGINT);
+	return (NULL);
 }
 
 static bool	check_last_eat_time(t_each_philo *each, struct timeval now)
