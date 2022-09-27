@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 00:33:32 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 00:35:07 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,7 @@ static void	set_struct_philo_env(char **av, t_philo_env *philo_env)
 	philo_env->print_sem = sem_open(PRINTF_SEM_NAME, O_CREAT, S_IRWXG, 1);
 	sem_unlink(MUST_EAT_ACHIEVE_SEM_NAME);
 	philo_env->must_eat_achieve_sem = sem_open(MUST_EAT_ACHIEVE_SEM_NAME,
-												O_CREAT,
-												S_IRWXG,
-												0);
+			O_CREAT, S_IRWXG, 0);
 }
 
 static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)

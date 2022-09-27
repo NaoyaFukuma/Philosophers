@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/27 16:36:31 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 00:34:32 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int ac, char **av)
 	if (!each_philo_struct_ptr)
 		printf("\e[31mError: Memory allocation in set each philo struct.\e[m");
 	else if (pthread_create(&monitor_philos_thread, NULL,
-				monitor_philos_routine, each_philo_struct_ptr))
+			monitor_philos_routine, each_philo_struct_ptr))
 		printf("\e[31mError: create pthread.\e[m");
 	else
 	{
