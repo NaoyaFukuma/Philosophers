@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 01:36:48 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/28 13:52:55 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	util_put_log(t_each_philo *each, char *color, long now_us, char *msg)
 	long	time_stamp;
 
 	time_stamp = (now_us - each->philo_env->initial_us) / 1000;
-	pthread_mutex_lock(&(each->philo_env->printf_mutex_t));
+	// pthread_mutex_lock(&(each->philo_env->printf_mutex_t));
 	printf("%s%ld %d%s\e[m\n", color, time_stamp, each->philo_id_num, msg);
-	pthread_mutex_unlock(&(each->philo_env->printf_mutex_t));
+	// pthread_mutex_unlock(&(each->philo_env->printf_mutex_t));
 	return ;
 }
 
