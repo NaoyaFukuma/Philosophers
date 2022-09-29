@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 01:57:34 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/29 10:33:47 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ static void	set_struct_philo_env(char **av, t_philo_env *philo_env)
 		philo_env->must_eat = -1;
 	philo_env->must_eat_achive_count = 0;
 	philo_env->finish_flag = false;
-	pthread_mutex_init(&philo_env->printf_mutex_t, NULL);
 	pthread_mutex_init(&philo_env->fin_flag_mutex_t, NULL);
 	pthread_mutex_init(&philo_env->must_eat_mutex_t, NULL);
 }

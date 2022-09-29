@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 01:57:17 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/29 10:33:37 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_philo_env
 	pthread_mutex_t	must_eat_mutex_t;
 	bool			finish_flag;
 	pthread_mutex_t	fin_flag_mutex_t;
-	pthread_mutex_t	printf_mutex_t;
 	long			initial_us;
 	pthread_t		*each_philo_thread;
 }					t_philo_env;
