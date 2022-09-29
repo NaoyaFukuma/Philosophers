@@ -25,6 +25,7 @@ bool	start_monitar_thread(pthread_t *moni_thread, t_each_philo	*each)
 void	*moni_philos_routine(void *arg_each_philo_structarry)
 {
 	struct timeval	now;
+	long	now_us;
 	t_each_philo	*each;
 	long			i;
 
@@ -33,24 +34,26 @@ void	*moni_philos_routine(void *arg_each_philo_structarry)
 	usleep(each->philo_env->time_to_die * 1000 - 5000);
 	while (true)
 	{
-		if (++i == each->philo_env->num_of_philo)
-			i = 0;
 		if (util_check_fin(&each[i]))
 			return (NULL);
 		pthread_mutex_lock(&(each->philo_env->printf_mutex_t));
 
 		gettimeofday(&now, NULL);
-		if (check_last_eat_time(&each[i], now))
+		now_us = now.tv_sec * 1000000 + now.tv_usec;
+		while (++i < each->philo_env->num_of_philo)
 		{
-			pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
-			each->philo_env->finish_flag = true;
-			pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
-			util_put_log(&each[i], RED, now.tv_sec * 1000000 + now.tv_usec,
-				DIED);
-		pthread_mutex_unlock(&(each->philo_env->printf_mutex_t));
-			return (NULL);
+			if (check_last_eat_time(&each[i], now))
+			{
+				pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
+				each->philo_env->finish_flag = true;
+				pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
+				util_put_log(&each[i], RED, now_us, DIED);
+				pthread_mutex_unlock(&(each->philo_env->printf_mutex_t));
+					return (NULL);
+			}
+			pthread_mutex_unlock(&(each->philo_env->printf_mutex_t));
 		}
-		pthread_mutex_unlock(&(each->philo_env->printf_mutex_t));
+		i = -1;
 		usleep(100);
 	}
 }
