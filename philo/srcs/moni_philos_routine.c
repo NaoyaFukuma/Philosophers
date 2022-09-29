@@ -45,7 +45,7 @@ void	*moni_philos_routine(void *arg_each_philo_structarry)
 				pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
 				each->philo_env->finish_flag = true;
 				pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
-				usleep(20);
+				usleep(50);
 				util_put_log(&each[i], RED, now_us, DIED);
 					return (NULL);
 			}
