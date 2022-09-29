@@ -31,7 +31,7 @@ void	*moni_philos_routine(void *arg_each_philo_structarry)
 
 	each = arg_each_philo_structarry;
 	i = -1;
-	usleep(each->philo_env->time_to_die * 1000 - 2000);
+	usleep(each->philo_env->time_to_die * 1000 - 5000);
 	while (true)
 	{
 		gettimeofday(&now, NULL);
