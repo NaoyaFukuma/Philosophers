@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/29 13:04:38 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/29 22:43:45 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ bool				start_monitar_thread(pthread_t *moni_thread,
 
 /* in util.c */
 int					util_atoi(char *str);
-void				util_put_log(t_each_philo *each, char *color, char *msg);
+void				util_put_log(t_each_philo *each, long now_us, char *color, char *msg);
 void				util_wait_usleep(long start_time_us, long wait_time_ms);
 bool				util_check_fin(t_each_philo *each);
 void				util_all_free(t_each_philo *each);
