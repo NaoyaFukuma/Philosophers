@@ -22,6 +22,7 @@ void	*moni_philos_routine(void *arg)
 
 	each = arg;
 	i = -1;
+	usleep(each->philo_env->time_to_die * 1000 - 5000);
 	while (true)
 	{
 		gettimeofday(&now, NULL);
@@ -34,7 +35,7 @@ void	*moni_philos_routine(void *arg)
 				sem_post(each->philo_env->must_eat_achieve_sem);
 			return ("died");
 		}
-		usleep(50);
+		usleep(7000);
 	}
 }
 

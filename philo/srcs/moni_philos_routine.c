@@ -21,14 +21,14 @@ bool	start_monitar_thread(pthread_t *moni_thread, t_each_philo *each)
 	return (false);
 }
 
-void	*moni_philos_routine(void *arg_each_philo_structarry)
+void	*moni_philos_routine(void *arg)
 {
 	struct timeval	now;
 	long			now_us;
 	t_each_philo	*each;
 	long			i;
 
-	each = arg_each_philo_structarry;
+	each = arg;
 	i = -1;
 	usleep(each->philo_env->time_to_die * 1000 - 5000);
 	while (true)

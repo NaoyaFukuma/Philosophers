@@ -6,7 +6,7 @@
 #    By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 22:41:02 by nfukuma           #+#    #+#              #
-#    Updated: 2022/09/28 01:24:02 by nfukuma          ###   ########.fr        #
+#    Updated: 2022/09/29 23:51:32 by nfukuma          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ $(OBJ_DIR)%.o : $(SRCS_DIR)%.c
 
 $(NAME):	$(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@
+#	$(CC) $(CFLAGS) -fsanitize=thread $(OBJS) -o $@
 
 clean:
 	$(RM) -r $(OBJ_DIR)

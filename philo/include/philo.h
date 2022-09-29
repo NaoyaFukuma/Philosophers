@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/29 22:43:45 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/29 23:47:22 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_each_philo
 void				*each_philo_routine(void *arg_each_philo_struct);
 
 /* moni_philos_routine.c */
-void				*moni_philos_routine(void *arg_each_philo_structarry);
+void				*moni_philos_routine(void *arg);
 bool				start_monitar_thread(pthread_t *moni_thread,
 						t_each_philo *each);
 
