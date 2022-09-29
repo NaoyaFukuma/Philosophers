@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/29 22:45:20 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/29 22:54:14 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	util_wait_usleep(long start_time_us, long wait_time_ms)
 	long			dest_time_us;
 
 	dest_time_us = start_time_us + wait_time_ms * 1000;
-	usleep(wait_time_ms * 1000 - 5000);
+	usleep(wait_time_ms * 1000 - 10000);
 	while (1)
 	{
 		gettimeofday(&now, NULL);
