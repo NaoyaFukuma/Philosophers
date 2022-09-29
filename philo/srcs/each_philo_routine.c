@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/29 10:32:58 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/29 10:54:11 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ void	*each_philo_routine(void *arg_each_philo_struct)
 
 	each = arg_each_philo_struct;
 	if (each->philo_id_num % 2 == 0)
-		usleep(50);
+		usleep(10000);
 	while (true)
 	{
-		if (take_fork_philo(each) == OTHER_PHILO_DEAD)
+		if (take_fork_philo(each))
 			return (NULL);
-		if (eat_philo(each) == OTHER_PHILO_DEAD)
+		if (eat_philo(each))
 			return (NULL);
-		if (sleep_philo(each) == OTHER_PHILO_DEAD)
+		if (sleep_philo(each))
 			return (NULL);
-		if (think_philo(each) == OTHER_PHILO_DEAD)
+		if (think_philo(each))
 			return (NULL);
 	}
 }

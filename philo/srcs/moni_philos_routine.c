@@ -40,7 +40,7 @@ void	*moni_philos_routine(void *arg_each_philo_structarry)
 		{
 			if (util_check_fin(&each[i]))
 				return (NULL);
-			if (check_last_eat_time(&each[i], now))
+			if (check_last_eat_time(&each[i], now_us))
 			{
 				pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
 				each->philo_env->finish_flag = true;
@@ -50,15 +50,14 @@ void	*moni_philos_routine(void *arg_each_philo_structarry)
 			}
 		}
 		i = -1;
-		usleep(5000);
+		usleep(7000);
 	}
 }
 
-static bool	check_last_eat_time(t_each_philo *each, struct timeval now)
+static bool	check_last_eat_time(t_each_philo *each, long now_us)
 {
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
-	if ((now.tv_sec * 1000000 + now.tv_usec
-			- each->last_eat_time_us) >= each->philo_env->time_to_die * 1000)
+	if ((now_us - each->last_eat_time_us) >= each->philo_env->time_to_die * 1000)
 	{
 		pthread_mutex_unlock(&(each->last_eat_mutex_t));
 		return (true);
