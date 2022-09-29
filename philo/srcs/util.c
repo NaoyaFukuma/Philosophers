@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/29 23:06:21 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/29 23:55:02 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	util_atoi(char *str)
 void	util_put_log(t_each_philo *each, long now_us, char *color, char *msg)
 {
 	printf("%s%ld\t%d%s\e[m\n", color, (now_us - each->philo_env->initial_us)
-			/ 1000, each->philo_id_num, msg);
+		/ 1000, each->philo_id_num, msg);
 	return ;
 }
 

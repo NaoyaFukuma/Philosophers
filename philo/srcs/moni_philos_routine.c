@@ -12,7 +12,9 @@
 
 #include "philo.h"
 
-static bool	check_last_eat_time(t_each_philo *each, long now_us);
+static bool	check_last_eat(t_each_philo *each, long now_us);
+static void	*moni_philos_routine(void *arg);
+static void	set_finish_flag(t_each_philo *each);
 
 bool	start_monitar_thread(pthread_t *moni_thread, t_each_philo *each)
 {
@@ -21,10 +23,16 @@ bool	start_monitar_thread(pthread_t *moni_thread, t_each_philo *each)
 	return (false);
 }
 
+static void	set_finish_flag(t_each_philo *each)
+{
+	pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
+	each->philo_env->finish_flag = true;
+	pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
+}
+
 void	*moni_philos_routine(void *arg)
 {
 	struct timeval	now;
-	long			now_us;
 	t_each_philo	*each;
 	long			i;
 
@@ -34,18 +42,16 @@ void	*moni_philos_routine(void *arg)
 	while (true)
 	{
 		gettimeofday(&now, NULL);
-		now_us = now.tv_sec * 1000000 + now.tv_usec;
 		while (++i < each->philo_env->num_of_philo)
 		{
 			if (util_check_fin(&each[i]))
 				return (NULL);
-			if (check_last_eat_time(&each[i], now_us))
+			if (check_last_eat(&each[i], now.tv_sec * 1000000 + now.tv_usec))
 			{
-				pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
-				each->philo_env->finish_flag = true;
-				pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
-				usleep(50);
-				util_put_log(&each[i], now_us, RED, DIED);
+				set_finish_flag(each);
+				// usleep(50);
+				util_put_log(&each[i], now.tv_sec * 1000000 + now.tv_usec, RED,
+						DIED);
 				return (NULL);
 			}
 		}
@@ -54,7 +60,7 @@ void	*moni_philos_routine(void *arg)
 	}
 }
 
-static bool	check_last_eat_time(t_each_philo *each, long now_us)
+static bool	check_last_eat(t_each_philo *each, long now_us)
 {
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
 	if ((now_us - each->last_eat_time_us) >= each->philo_env->time_to_die
