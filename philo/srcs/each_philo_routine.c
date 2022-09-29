@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/29 22:50:45 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/29 23:04:44 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static int	eat_philo(t_each_philo *each)
 	util_put_log(each, each->last_eat_time_us, CYAN, PIC_FORK);
 	util_put_log(each, each->last_eat_time_us, YELLOW, EATING);
 	pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
-
 	util_wait_usleep(each->last_eat_time_us, each->philo_env->time_to_eat);
 	if (++each->eat_count == each->philo_env->must_eat)
 	{
@@ -93,11 +92,10 @@ static int	eat_philo(t_each_philo *each)
 static int	sleep_philo(t_each_philo *each)
 {
 	struct timeval	now;
-	long	now_us;
+	long			now_us;
 
 	if (util_check_fin(each))
 		return (OTHER_PHILO_DEAD);
-
 	pthread_mutex_lock(&each->philo_env->printf_mutex_t);
 	gettimeofday(&now, NULL);
 	now_us = now.tv_sec * 1000000 + now.tv_usec;
@@ -110,7 +108,7 @@ static int	sleep_philo(t_each_philo *each)
 static int	think_philo(t_each_philo *each)
 {
 	struct timeval	now;
-	long	now_us;
+	long			now_us;
 
 	if (util_check_fin(each))
 		return (OTHER_PHILO_DEAD);

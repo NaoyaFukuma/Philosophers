@@ -27,8 +27,8 @@ void	*moni_philos_routine(void *arg)
 		gettimeofday(&now, NULL);
 		if (check_last_eat_time(each, now))
 		{
-			util_put_log(each, RED, now.tv_sec * 1000000 + now.tv_usec, DIED);
 			sem_wait(each->philo_env->print_sem);
+			util_put_log(each, RED, now.tv_sec * 1000000 + now.tv_usec, DIED);
 			i = -1;
 			while (++i < each->philo_env->num_of_philo)
 				sem_post(each->philo_env->must_eat_achieve_sem);

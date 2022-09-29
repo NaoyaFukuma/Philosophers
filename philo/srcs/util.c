@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/29 22:54:14 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/29 23:06:21 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,8 @@ int	util_atoi(char *str)
 
 void	util_put_log(t_each_philo *each, long now_us, char *color, char *msg)
 {
-	// struct timeval	now;
-
-	// pthread_mutex_lock(&each->philo_env->printf_mutex_t);
-	// gettimeofday(&now, NULL);
-	printf("%s%ld\t%d%s\e[m\n", color, (now_us - each->philo_env->initial_us) / 1000, each->philo_id_num, msg);
-	// pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
+	printf("%s%ld\t%d%s\e[m\n", color, (now_us - each->philo_env->initial_us)
+			/ 1000, each->philo_id_num, msg);
 	return ;
 }
 
@@ -72,20 +68,10 @@ bool	util_check_fin(t_each_philo *each)
 		return (true);
 	}
 	pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
-	// pthread_mutex_lock(&(each->philo_env->must_eat_mutex_t));
-	// if (each->philo_env->must_eat_achive_count >= each->philo_env->num_of_philo)
-	// {
-	// 	pthread_mutex_unlock(&(each->philo_env->must_eat_mutex_t));
-	// 	pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
-	// 		each->philo_env->finish_flag = true;
-	// 	pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
-	// 	return (true);
-	// }
-	// pthread_mutex_unlock(&(each->philo_env->must_eat_mutex_t));
 	return (false);
 }
 
-void	util_all_free(t_each_philo	*each)
+void	util_all_free(t_each_philo *each)
 {
 	free(each->right_side_fork);
 	free(each->philo_env->each_philo_thread);
