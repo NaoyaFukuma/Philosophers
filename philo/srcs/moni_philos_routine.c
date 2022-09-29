@@ -14,7 +14,7 @@
 
 static bool	check_last_eat(t_each_philo *each, long now_us);
 static void	*moni_philos_routine(void *arg);
-static void	set_finish_flag_and_put_log(t_each_philo *each, struct timeval	now);
+static void	set_finish_flag_and_put_log(t_each_philo *each, struct timeval now);
 
 bool	start_monitar_thread(pthread_t *moni_thread, t_each_philo *each)
 {
@@ -29,8 +29,7 @@ static void	set_finish_flag_and_put_log(t_each_philo *each, struct timeval now)
 	each->philo_env->finish_flag = true;
 	pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
 	usleep(50);
-	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, RED,
-		DIED);
+	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, RED, DIED);
 }
 
 void	*moni_philos_routine(void *arg)
