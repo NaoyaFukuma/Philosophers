@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/29 13:16:24 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/29 16:37:41 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,12 @@ void	*each_philo_routine(void *arg_each_philo_struct)
 
 static int	take_fork_philo(t_each_philo *each)
 {
-	// struct timeval	now;
-
 	pthread_mutex_lock(each->right_side_fork);
 	if (util_check_fin(each))
 	{
 		pthread_mutex_unlock(each->right_side_fork);
 		return (OTHER_PHILO_DEAD);
 	}
-	// gettimeofday(&now, NULL);
 	util_put_log(each, MAGENTA, PIC_FORK);
 	if (each->philo_env->num_of_philo == 1)
 	{
@@ -88,7 +85,6 @@ static int	eat_philo(t_each_philo *each)
 static int	sleep_philo(t_each_philo *each)
 {
 	struct timeval	now;
-	// long			now_us;
 
 	pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
 	if (each->philo_env->finish_flag == OTHER_PHILO_DEAD)
@@ -98,7 +94,6 @@ static int	sleep_philo(t_each_philo *each)
 	}
 	pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
 	gettimeofday(&now, NULL);
-	// now_us = now.tv_sec * 1000000 + now.tv_usec;
 	util_put_log(each, BLUE, SLEEPING);
 	util_wait_usleep(now.tv_sec * 1000000 + now.tv_usec, each->philo_env->time_to_sleep);
 	return (OTHER_PHILO_ALIVE);

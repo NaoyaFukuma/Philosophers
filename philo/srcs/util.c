@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/29 16:24:17 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/29 17:10:58 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void	util_put_log(t_each_philo *each, char *color, char *msg)
 {
 	struct timeval	now;
 
-	pthread_mutex_lock(&each->philo_env->printf_mutex_t);
+	// pthread_mutex_lock(&each->philo_env->printf_mutex_t);
 	gettimeofday(&now, NULL);
 	printf("%s%ld\t%d%s\e[m\n", color, ((now.tv_sec * 1000000 + now.tv_usec) - each->philo_env->initial_us) / 1000, each->philo_id_num, msg);
-	pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
+	// pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
 	return ;
 }
 
