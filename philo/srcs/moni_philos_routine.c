@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static bool	check_last_eat_time(t_each_philo *each, struct timeval now);
+static bool	check_last_eat_time(t_each_philo *each, long now_us);
 
 bool	start_monitar_thread(pthread_t *moni_thread, t_each_philo	*each)
 {
