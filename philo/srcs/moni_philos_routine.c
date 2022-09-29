@@ -34,14 +34,14 @@ void	*moni_philos_routine(void *arg_each_philo_structarry)
 	usleep(each->philo_env->time_to_die * 1000 - 5000);
 	while (true)
 	{
-		if (util_check_fin(&each[i]))
-			return (NULL);
 		pthread_mutex_lock(&(each->philo_env->printf_mutex_t));
 
 		gettimeofday(&now, NULL);
 		now_us = now.tv_sec * 1000000 + now.tv_usec;
 		while (++i < each->philo_env->num_of_philo)
 		{
+			if (util_check_fin(&each[i]))
+				return (NULL);
 			if (check_last_eat_time(&each[i], now))
 			{
 				pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
