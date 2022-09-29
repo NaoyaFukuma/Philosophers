@@ -34,7 +34,7 @@ void	*moni_philos_routine(void *arg_each_philo_structarry)
 	usleep(each->philo_env->time_to_die * 1000 - 5000);
 	while (true)
 	{
-		pthread_mutex_lock(&(each->philo_env->printf_mutex_t));
+		// pthread_mutex_lock(&(each->philo_env->printf_mutex_t));
 
 		gettimeofday(&now, NULL);
 		now_us = now.tv_sec * 1000000 + now.tv_usec;
@@ -51,10 +51,10 @@ void	*moni_philos_routine(void *arg_each_philo_structarry)
 				pthread_mutex_unlock(&(each->philo_env->printf_mutex_t));
 					return (NULL);
 			}
-			pthread_mutex_unlock(&(each->philo_env->printf_mutex_t));
+			// pthread_mutex_unlock(&(each->philo_env->printf_mutex_t));
 		}
 		i = -1;
-		usleep(100);
+		usleep(5000);
 	}
 }
 
