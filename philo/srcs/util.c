@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/29 12:22:47 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/09/29 13:06:48 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,12 @@ int	util_atoi(char *str)
 	return ((int)ret);
 }
 
-void	util_put_log(t_each_philo *each, char *color, long now_us, char *msg)
+void	util_put_log(t_each_philo *each, char *color, char *msg)
 {
-	long	time_stamp;
+	struct timeval	now;
 
-	time_stamp = (now_us - each->philo_env->initial_us) / 1000;
-	pthread_mutex_lock(&each->philo_env->printf_mutex_t);
-	printf("%s%ld\t%d%s\e[m\n", color, time_stamp, each->philo_id_num, msg);
-	pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
+	gettimeofday(&now, NULL);
+	printf("%s%ld\t%d%s\e[m\n", color, ((now.tv_sec * 1000000 + now.tv_usec) - each->philo_env->initial_us) / 1000, each->philo_id_num, msg);
 	return ;
 }
 
@@ -51,7 +49,7 @@ void	util_wait_usleep(long start_time_us, long wait_time_ms)
 	long			dest_time_us;
 
 	dest_time_us = start_time_us + wait_time_ms * 1000;
-	usleep(wait_time_ms * 1000 - 10000);
+	usleep(wait_time_ms * 1000 - 5000);
 	while (1)
 	{
 		gettimeofday(&now, NULL);
