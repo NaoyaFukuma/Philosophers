@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/02 21:23:27 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/06 11:31:54 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)
 	{
 		each_philo_ptr[i].philo_env = philo_env;
 		each_philo_ptr[i].philo_id_num = i + 1;
+		each_philo_ptr[i].initial_us = philo_env->initial_us;
 		each_philo_ptr[i].right_side_fork = &fork_mutexs[i];
 		each_philo_ptr[i].left_side_fork = &fork_mutexs[(i
 				+ philo_env->num_of_philo - 1) % philo_env->num_of_philo];
