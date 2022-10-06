@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/07 02:03:38 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/07 03:47:48 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,6 @@ static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)
 	i = -1;
 	while (++i < philo_env->num_of_philo)
 	{
-		// each_philo_ptr[i].time_to_die = philo_env->time_to_die;
-		// each_philo_ptr[i].time_to_eat = philo_env->time_to_eat;
-		// each_philo_ptr[i].time_to_sleep = philo_env->time_to_sleep;
-		// each_philo_ptr[i].must_eat = philo_env->must_eat;
 		each_philo_ptr[i].philo_env = philo_env;
 		each_philo_ptr[i].philo_id_num = i + 1;
 		each_philo_ptr[i].initial_us = philo_env->initial_us;
