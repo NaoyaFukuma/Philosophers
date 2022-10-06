@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/06 11:46:26 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/06 16:55:13 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,6 @@ typedef struct s_each_philo
 	long			initial_us;
 	pthread_mutex_t	last_eat_mutex_t;
 }					t_each_philo;
-
-// typedef struct s_each_philo
-// {
-// 	t_philo_env		*philo_env;
-// 	int				philo_id_num;
-// 	pthread_mutex_t	*right_side_fork;
-// 	pthread_mutex_t	*left_side_fork;
-// 	int				eat_count;
-// 	long			last_eat_time_us;
-// 	pthread_mutex_t	last_eat_mutex_t;
-// }					t_each_philo;
-
 
 
 /* each_philo_routine.c */
