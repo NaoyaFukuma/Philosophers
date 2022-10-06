@@ -6,14 +6,15 @@
 #    By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 22:41:02 by nfukuma           #+#    #+#              #
-#    Updated: 2022/10/07 01:21:48 by nfukuma          ###   ########.fr        #
+#    Updated: 2022/10/07 01:29:56 by nfukuma          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # set up
 NAME		=	philo
 CC		=	gcc
-CFLAGS		=	-g -Wall -Werror -Wextra
+#CFLAGS		=	-g -Wall -Werror -Wextra
+CFLAGS		=	-g -Wall -Werror -Wextra -fsanitize=thread
 
 # for *.c set up
 SRCS_NAME	=	main.c each_philo_routine.c moni_philos_routine.c util.c
@@ -39,7 +40,6 @@ $(OBJ_DIR)%.o : $(SRCS_DIR)%.c
 
 $(NAME):	$(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -lpthread -o $@
-#	$(CC) $(CFLAGS) -fsanitize=thread $(OBJS) -lpthread -o $@
 
 clean:
 	$(RM) -r $(OBJ_DIR)
