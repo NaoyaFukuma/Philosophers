@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/06 16:55:13 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/07 02:04:04 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ typedef struct s_philo_env
 
 typedef struct s_each_philo
 {
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				must_eat;
+	// int				time_to_die;
+	// int				time_to_eat;
+	// int				time_to_sleep;
+	// int				must_eat;
 	t_philo_env		*philo_env;
 	int				philo_id_num;
 	pthread_mutex_t	*right_side_fork;
