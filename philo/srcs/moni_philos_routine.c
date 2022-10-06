@@ -42,6 +42,7 @@ static void	*moni_philos_routine(void *arg)
 				return (NULL);
 			if (check_last_eat(&each[i], now.tv_sec * 1000000 + now.tv_usec))
 			{
+				usleep(700);
 				pthread_mutex_lock(&each->philo_env->printf_mutex_t);
 				set_finish_flag_and_put_log(each, now);
 				pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
