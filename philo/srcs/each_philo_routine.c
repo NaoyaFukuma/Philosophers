@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/07 02:26:33 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/07 02:32:22 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,26 @@ static int	take_fork_philo(t_each_philo *each)
 	struct timeval	now;
 
 	pthread_mutex_lock(each->right_side_fork);
-	pthread_mutex_lock(&each->philo_env->printf_mutex_t);
+	// pthread_mutex_lock(&each->philo_env->printf_mutex_t);
 	if (util_check_fin(each))
 	{
-		pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
+		// pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
 		pthread_mutex_unlock(each->right_side_fork);
 		return (OTHER_PHILO_DEAD);
 	}
 	gettimeofday(&now, NULL);
 	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, MAGENTA, PIC_FORK);
-	pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
+	// pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
 	if (each->philo_env->num_of_philo == 1)
 	{
 		pthread_mutex_unlock(each->right_side_fork);
 		return (OTHER_PHILO_DEAD);
 	}
-	pthread_mutex_lock(&each->philo_env->printf_mutex_t);
+	// pthread_mutex_lock(&each->philo_env->printf_mutex_t);
 	pthread_mutex_lock(each->left_side_fork);
 	if (util_check_fin(each))
 	{
-		pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
+		// pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
 		pthread_mutex_unlock(each->left_side_fork);
 		pthread_mutex_unlock(each->right_side_fork);
 		return (OTHER_PHILO_DEAD);
@@ -79,7 +79,7 @@ static int	eat_philo(t_each_philo *each)
 	pthread_mutex_unlock(&(each->last_eat_mutex_t));
 	util_put_log(each, each->last_eat_time_us, CYAN, PIC_FORK);
 	util_put_log(each, each->last_eat_time_us, YELLOW, EATING);
-	pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
+	// pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
 	util_wait_usleep(each->last_eat_time_us, each->philo_env->time_to_eat);
 	if (++each->eat_count == each->philo_env->must_eat)
 	{
@@ -98,16 +98,16 @@ static int	sleep_philo(t_each_philo *each)
 	struct timeval	now;
 	long			now_us;
 
-	pthread_mutex_lock(&each->philo_env->printf_mutex_t);
+	// pthread_mutex_lock(&each->philo_env->printf_mutex_t);
 	if (util_check_fin(each))
 	{
-		pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
+		// pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
 		return (OTHER_PHILO_DEAD);
 	}
 	gettimeofday(&now, NULL);
 	now_us = now.tv_sec * 1000000 + now.tv_usec;
 	util_put_log(each, now_us, BLUE, SLEEPING);
-	pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
+	// pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
 	util_wait_usleep(now_us, each->philo_env->time_to_sleep);
 	return (OTHER_PHILO_ALIVE);
 }
@@ -117,15 +117,15 @@ static int	think_philo(t_each_philo *each)
 	struct timeval	now;
 	long			now_us;
 
-	pthread_mutex_lock(&each->philo_env->printf_mutex_t);
+	// pthread_mutex_lock(&each->philo_env->printf_mutex_t);
 	if (util_check_fin(each))
 	{
-		pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
+		// pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
 		return (OTHER_PHILO_DEAD);
 	}
 	gettimeofday(&now, NULL);
 	now_us = now.tv_sec * 1000000 + now.tv_usec;
 	util_put_log(each, now_us, WHITE, THINKING);
-	pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
+	// pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
 	return (OTHER_PHILO_ALIVE);
 }
