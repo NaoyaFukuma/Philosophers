@@ -6,14 +6,14 @@
 #    By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 22:41:02 by nfukuma           #+#    #+#              #
-#    Updated: 2022/10/07 00:58:06 by nfukuma          ###   ########.fr        #
+#    Updated: 2022/10/07 00:59:45 by nfukuma          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # set up
 NAME		=	philo
 CC		=	gcc
-CFLAGS		=	-g -Wall -Werror -Wextra TSAN_OPTIONS=second_deadlock_stack=1
+CFLAGS		=	-g -Wall -Werror -Wextra
 
 # for *.c set up
 SRCS_NAME	=	main.c each_philo_routine.c moni_philos_routine.c util.c
