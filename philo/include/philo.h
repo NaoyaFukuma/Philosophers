@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/07 03:23:06 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/07 03:48:58 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,12 @@ typedef struct s_each_philo
 	pthread_mutex_t	last_eat_mutex_t;
 }					t_each_philo;
 
-
 /* each_philo_routine.c */
 void				*each_philo_routine(void *arg_each_philo_struct);
 
 /* moni_philos_routine.c */
-bool				start_monitar_thread(pthread_t *moni_thread,
-						t_each_philo *each);
+bool	start_monitar_thread(pthread_t *moni_thread,
+			t_each_philo *each);
 
 /* in util.c */
 int					util_atoi(char *str);
