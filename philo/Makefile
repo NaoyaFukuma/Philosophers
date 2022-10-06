@@ -12,7 +12,7 @@
 
 # set up
 NAME		=	philo
-CC			=	gcc
+CC		=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
 
 # for *.c set up
@@ -35,11 +35,11 @@ $(OBJ_DIR):
 	mkdir -p obj
 
 $(OBJ_DIR)%.o : $(SRCS_DIR)%.c
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) -c -lpthread -o $@ $<
 
 $(NAME):	$(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@
-#	$(CC) $(CFLAGS) -fsanitize=thread $(OBJS) -o $@
+	$(CC) $(CFLAGS) $(OBJS) -lpthread -o $@
+#	$(CC) $(CFLAGS) -fsanitize=thread $(OBJS)  -o $@
 
 clean:
 	$(RM) -r $(OBJ_DIR)
