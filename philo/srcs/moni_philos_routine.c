@@ -32,7 +32,7 @@ static void	set_finish_flag_and_put_log(t_each_philo *each, struct timeval now)
 	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, RED, DIED);
 }
 
-void	*moni_philos_routine(void *arg)
+static void	*moni_philos_routine(void *arg)
 {
 	struct timeval	now;
 	t_each_philo	*each;
@@ -62,8 +62,7 @@ void	*moni_philos_routine(void *arg)
 static bool	check_last_eat(t_each_philo *each, long now_us)
 {
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
-	if ((now_us - each->last_eat_time_us) >= each->philo_env->time_to_die
-		* 1000)
+	if ((now_us - each->last_eat_time_us) >= each->time_to_die * 1000)
 	{
 		pthread_mutex_unlock(&(each->last_eat_mutex_t));
 		return (true);
