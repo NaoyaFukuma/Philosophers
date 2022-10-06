@@ -42,9 +42,7 @@ static void	*moni_philos_routine(void *arg)
 			if (check_last_eat(&each[i], now.tv_sec * 1000000 + now.tv_usec))
 			{
 				usleep(500);
-				pthread_mutex_lock(&each->philo_env->printf_mutex_t);
 				set_finish_flag_and_put_log(each, now);
-				pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
 				return (NULL);
 			}
 		}
@@ -68,9 +66,11 @@ static bool	check_last_eat(t_each_philo *each, long now_us)
 
 static void	set_finish_flag_and_put_log(t_each_philo *each, struct timeval now)
 {
+	pthread_mutex_lock(&each->philo_env->printf_mutex_t);
 	pthread_mutex_lock(&(each->philo_env->fin_flag_mutex_t));
 	each->philo_env->finish_flag = true;
 	pthread_mutex_unlock(&(each->philo_env->fin_flag_mutex_t));
 	usleep(50);
 	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, RED, DIED);
+	pthread_mutex_unlock(&each->philo_env->printf_mutex_t);
 }
