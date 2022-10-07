@@ -6,14 +6,14 @@
 #    By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 22:41:02 by nfukuma           #+#    #+#              #
-#    Updated: 2022/10/07 02:39:55 by nfukuma          ###   ########.fr        #
+#    Updated: 2022/10/07 11:55:41 by nfukuma          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # set up
 NAME		=	philo
 CC		=	gcc
-CFLAGS		=	-g -Wall -Werror -Wextra
+CFLAGS		=	-Wall -Werror -Wextra
 #CFLAGS		=	-g -Wall -Werror -Wextra -fsanitize=thread
 
 # for *.c set up
