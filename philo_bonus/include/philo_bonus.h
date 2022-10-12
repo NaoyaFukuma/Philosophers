@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/12 17:15:45 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 01:17:25 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_philo_env
 	sem_t			*fork_sem;
 	sem_t			*print_sem;
 	sem_t			*must_eat_achieve_sem;
+	pid_t			*pid_arry;
 }					t_philo_env;
 
 typedef struct s_each_philo
@@ -80,6 +81,7 @@ void				*each_philo_routine(void *arg_each_philo_struct);
 /* moni_philos_routine.c */
 void				*moni_philos_routine(void *arg);
 void				*moni_must_eat(void *arg);
+bool	util_check_last_eat_time(t_each_philo *each, long now_us);
 
 /* in util.c */
 void				util_put_error_msg_exit(char *err_msg);
@@ -87,6 +89,6 @@ int					util_atoi(char *str);
 void				util_put_log(t_each_philo *each, char *color,
 						long time_stamp, char *msg);
 void				util_wait_usleep(long start_time_us, long wait_time_ms);
-void	util_kill_and_wait(int cp_num);
+void	util_kill_and_wait(int cp_num, t_each_philo *each);
 
 #endif

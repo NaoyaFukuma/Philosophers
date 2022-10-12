@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/12 17:15:40 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 01:16:11 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,16 @@ void	util_put_error_msg_exit(char *err_msg)
 	exit(EXIT_FAILURE);
 }
 
-void	util_kill_and_wait(int cp_num)
+void	util_kill_and_wait(int cp_num, t_each_philo *each)
 {
 	int	i;
 
-	kill(0, SIGINT);
 	i = -1;
 	while (++i < cp_num)
-		waitpid(-1, NULL, 0);
+	{
+		kill(each->philo_env->pid_arry[i], SIGINT);
+		waitpid(each->philo_env->pid_arry[i], NULL, 0);
+	}
 	return ;
 }
 
@@ -54,6 +56,8 @@ void	util_put_log(t_each_philo *each, char *color, long now_us, char *msg)
 {
 	long	time_stamp;
 
+	if (util_check_last_eat_time(each, now_us) && msg != DIED)
+		return ;
 	time_stamp = (now_us - each->philo_env->initial_us) / 1000;
 	printf("%s%ld %d%s\e[m\n", color, time_stamp, each->philo_id_num, msg);
 	return ;

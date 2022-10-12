@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/12 22:48:06 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 01:03:50 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,14 @@ int	main(int ac, char **av)
 	each_philo_struct = set_struct_each_philo(&philo_env);
 	if (!each_philo_struct)
 		util_put_error_msg_exit("Error: Memory allocation.");
-	printf("test\n");
 	if (exe_each_philo_process(each_philo_struct))
 		util_put_error_msg_exit("Error: exe_each_philo");
-	if (pthread_create(&moni_thread, NULL, moni_must_eat, &philo_env))
+	if (pthread_create(&moni_thread, NULL, moni_must_eat, each_philo_struct))
 	{
-		util_kill_and_wait(philo_env.num_of_philo);
+		util_kill_and_wait(philo_env.num_of_philo, each_philo_struct);
 		util_put_error_msg_exit("Error: create monitar pthread from main.");
 	}
 	pthread_join(moni_thread, NULL);
-	while (1)
-		;
 
 	exit(EXIT_SUCCESS);
 }
@@ -87,6 +84,9 @@ static void	set_struct_philo_env(char **av, t_philo_env *philo_env)
 												O_CREAT,
 												S_IRWXG,
 												0);
+	philo_env->pid_arry = malloc(sizeof(pid_t) * philo_env->num_of_philo);
+	if (!philo_env->pid_arry)
+		util_put_error_msg_exit("Error: Memory allocation.");
 }
 
 static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)
@@ -118,16 +118,15 @@ static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)
 static bool	exe_each_philo_process(t_each_philo *each)
 {
 	int			i;
-	pid_t		pid;
 	pthread_t	each_philo_thread;
 
 	i = -1;
 	while (++i < each->philo_env->num_of_philo)
 	{
-		pid = fork();
-		if (pid < 0)
+		each->philo_env->pid_arry[i] = fork();
+		if (each->philo_env->pid_arry[i] < 0)
 			break ;
-		if (pid == 0)
+		if (each->philo_env->pid_arry[i] == 0)
 		{
 			if (pthread_create(&each_philo_thread, NULL, each_philo_routine,
 					&each[i]))
@@ -138,7 +137,7 @@ static bool	exe_each_philo_process(t_each_philo *each)
 	}
 	if (i != each->philo_env->num_of_philo)
 	{
-		util_kill_and_wait(i);
+		util_kill_and_wait(i, each);
 		return (true);
 	}
 	return (false);
