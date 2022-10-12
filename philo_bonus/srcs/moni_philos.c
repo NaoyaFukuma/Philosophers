@@ -27,11 +27,10 @@ void	*moni_philos_routine(void *arg)
 		if (util_check_last_eat_time(each, now.tv_sec * 1000000 + now.tv_usec))
 		{
 			sem_wait(each->philo_env->print_sem);
-			util_put_log(each, RED, now.tv_sec * 1000000 + now.tv_usec, DIED);
-			sem_post(each->philo_env->print_sem);
-			i = -1;
 			while (++i < each->philo_env->num_of_philo)
 				sem_post(each->philo_env->must_eat_achieve_sem);
+			util_put_log(each, RED, now.tv_sec * 1000000 + now.tv_usec, DIED);
+			i = -1;
 			usleep(100000);
 		}
 		usleep(7000);
@@ -47,7 +46,7 @@ void	*moni_must_eat(void *arg)
 	i = -1;
 	while (++i < each->philo_env->num_of_philo)
 		sem_wait(each->philo_env->must_eat_achieve_sem);
-	sem_wait(each->philo_env->print_sem);
+	// sem_wait(each->philo_env->print_sem);
 	util_kill_and_wait(each->philo_env->num_of_philo, each);
 	return (NULL);
 }
