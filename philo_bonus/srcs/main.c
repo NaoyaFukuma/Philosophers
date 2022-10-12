@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/12 22:28:18 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/12 22:46:42 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ int	main(int ac, char **av)
 		util_put_error_msg_exit("Error: create monitar pthread from main.");
 	}
 	pthread_join(moni_thread, NULL);
+	while (1)
+		;
+
 	exit(EXIT_SUCCESS);
 }
 
