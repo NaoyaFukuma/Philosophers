@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/12 22:46:42 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/12 22:48:06 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int ac, char **av)
 	each_philo_struct = set_struct_each_philo(&philo_env);
 	if (!each_philo_struct)
 		util_put_error_msg_exit("Error: Memory allocation.");
+	printf("test\n");
 	if (exe_each_philo_process(each_philo_struct))
 		util_put_error_msg_exit("Error: exe_each_philo");
 	if (pthread_create(&moni_thread, NULL, moni_must_eat, &philo_env))
