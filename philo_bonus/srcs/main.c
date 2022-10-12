@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/12 22:18:00 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/12 22:28:18 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ static bool	exe_each_philo_process(t_each_philo *each)
 	{
 		pid = fork();
 		if (pid < 0)
-			return (true);
+			break ;
 		if (pid == 0)
 		{
 			if (pthread_create(&each_philo_thread, NULL, each_philo_routine,
