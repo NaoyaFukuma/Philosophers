@@ -47,7 +47,6 @@ void	*moni_must_eat(void *arg)
 	i = -1;
 	while (++i < each->philo_env->num_of_philo)
 		sem_wait(each->philo_env->must_eat_achieve_sem);
-	printf("aaaaaaaaaaaa\n");
 	sem_wait(each->philo_env->print_sem);
 	util_kill_and_wait(each->philo_env->num_of_philo, each);
 	return (NULL);
