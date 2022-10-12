@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/12 11:53:38 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/12 11:54:51 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ static int	sleep_philo(t_each_philo *each)
 	struct timeval	now;
 	long			now_us;
 
-	// if (util_check_fin(each))
-	// 	return (OTHER_PHILO_DEAD);
+	if (util_check_fin(each))
+		return (OTHER_PHILO_DEAD);
 	pthread_mutex_lock(&each->philo_env->printf_mutex_t);
 	gettimeofday(&now, NULL);
 	now_us = now.tv_sec * 1000000 + now.tv_usec;
