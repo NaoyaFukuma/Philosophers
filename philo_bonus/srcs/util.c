@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/29 23:54:05 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/12 17:15:40 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,17 @@ void	util_put_error_msg_exit(char *err_msg)
 {
 	printf("\e[31m%s\e[m\n", err_msg);
 	exit(EXIT_FAILURE);
+}
+
+void	util_kill_and_wait(int cp_num)
+{
+	int	i;
+
+	kill(0, SIGINT);
+	i = -1;
+	while (++i < cp_num)
+		waitpid(-1, NULL, 0);
+	return ;
 }
 
 int	util_atoi(char *str)

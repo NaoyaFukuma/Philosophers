@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 01:24:02 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/12 17:15:45 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ int					util_atoi(char *str);
 void				util_put_log(t_each_philo *each, char *color,
 						long time_stamp, char *msg);
 void				util_wait_usleep(long start_time_us, long wait_time_ms);
+void	util_kill_and_wait(int cp_num);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/09/28 01:59:06 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/12 22:18:00 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,28 @@ int	main(int ac, char **av)
 	if (!each_philo_struct)
 		util_put_error_msg_exit("Error: Memory allocation.");
 	if (exe_each_philo_process(each_philo_struct))
-		util_put_error_msg_exit("Error: fork");
-	if (pthread_create(&moni_thread, NULL, moni_must_eat,
-			&philo_env))
-		util_put_error_msg_exit("Error: create pthread.");
-	waitpid(-1, NULL, 0);
-	kill(0, SIGINT);
+		util_put_error_msg_exit("Error: exe_each_philo");
+	if (pthread_create(&moni_thread, NULL, moni_must_eat, &philo_env))
+	{
+		util_kill_and_wait(philo_env.num_of_philo);
+		util_put_error_msg_exit("Error: create monitar pthread from main.");
+	}
 	pthread_join(moni_thread, NULL);
-	exit (EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
 
 static char	*validate_arg(int ac, char **av)
 {
-	int	tmp_num;
+	int		tmp_num;
+	size_t	i;
 
 	if (ac < 5 || 6 < ac)
 		return ("Error: The number of invalid arguments.\n");
-	while (*(++av))
+	i = 0;
+	while (av[++i])
 	{
-		tmp_num = util_atoi(*av);
-		if (tmp_num < 1)
+		tmp_num = util_atoi(av[i]);
+		if ((tmp_num < 1) || ((2 <= i && i <= 4) && tmp_num < 60))
 			return ("Error: Invalid argument.\n");
 	}
 	return (NULL);
@@ -78,7 +80,9 @@ static void	set_struct_philo_env(char **av, t_philo_env *philo_env)
 	philo_env->print_sem = sem_open(PRINTF_SEM_NAME, O_CREAT, S_IRWXG, 1);
 	sem_unlink(MUST_EAT_ACHIEVE_SEM_NAME);
 	philo_env->must_eat_achieve_sem = sem_open(MUST_EAT_ACHIEVE_SEM_NAME,
-			O_CREAT, S_IRWXG, 0);
+												O_CREAT,
+												S_IRWXG,
+												0);
 }
 
 static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)
@@ -127,6 +131,11 @@ static bool	exe_each_philo_process(t_each_philo *each)
 			if (moni_philos_routine(&each[i]))
 				exit(EXIT_SUCCESS);
 		}
+	}
+	if (i != each->philo_env->num_of_philo)
+	{
+		util_kill_and_wait(i);
+		return (true);
 	}
 	return (false);
 }

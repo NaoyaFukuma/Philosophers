@@ -49,7 +49,7 @@ void	*moni_must_eat(void *arg)
 	while (++i < philo_env->num_of_philo)
 		sem_wait(philo_env->must_eat_achieve_sem);
 	sem_wait(philo_env->print_sem);
-	kill(0, SIGINT);
+	util_kill_and_wait(philo_env->num_of_philo);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/12 14:58:04 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/12 15:00:21 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static bool	validate_arg(int ac, char **av)
 		tmp_num = util_atoi(av[i]);
 		if ((tmp_num < 1) || ((2 <= i && i <= 4) && tmp_num < 60))
 		{
-			printf("%s\n",av[i]);
 			printf("\e[31mError: Invalid argument.\n\e[m");
 			return (true);
 		}
