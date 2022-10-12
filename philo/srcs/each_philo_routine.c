@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/07 11:56:56 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/12 09:41:28 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ static int	eat_philo(t_each_philo *each)
 	struct timeval	now;
 
 	pthread_mutex_lock(&each->philo_env->printf_mutex_t);
-	gettimeofday(&now, NULL);
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
+	gettimeofday(&now, NULL);
 	each->last_eat_time_us = now.tv_sec * 1000000 + now.tv_usec;
 	pthread_mutex_unlock(&(each->last_eat_mutex_t));
 	util_put_log(each, each->last_eat_time_us, CYAN, PIC_FORK);
