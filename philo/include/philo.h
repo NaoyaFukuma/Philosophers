@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/07 03:49:39 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/12 12:11:12 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@
 # define DIED " died"
 
 /* color */
-# define RED "\e[31m"
-# define YELLOW "\e[33m"
-# define BLUE "\e[34m"
-# define MAGENTA "\e[35m"
-# define CYAN "\e[36m"
+# define RED "\e[m"
+# define YELLOW "\e[m"
+# define BLUE "\e[m"
+# define MAGENTA "\e[m"
+# define CYAN "\e[m"
 # define WHITE "\e[m"
 
 /* flag about is philo died */
