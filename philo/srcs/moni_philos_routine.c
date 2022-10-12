@@ -46,7 +46,7 @@ static void	*moni_philos_routine(void *arg)
 			}
 		}
 		i = -1;
-		usleep(70);
+		usleep(7000);
 	}
 }
 
