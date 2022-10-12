@@ -41,7 +41,6 @@ static void	*moni_philos_routine(void *arg)
 				return (NULL);
 			if (check_last_eat(&each[i], now.tv_sec * 1000000 + now.tv_usec))
 			{
-				usleep(500);
 				set_finish_flag_and_put_log(each, now);
 				return (NULL);
 			}
