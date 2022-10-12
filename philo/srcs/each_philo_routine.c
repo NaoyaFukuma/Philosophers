@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/12 12:21:58 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/12 12:25:05 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,6 @@ static int	take_fork_philo(t_each_philo *each)
 		pthread_mutex_unlock(each->right_side_fork);
 		return (OTHER_PHILO_DEAD);
 	}
-	pthread_mutex_lock(each->left_side_fork);
-	// if (util_check_fin(each))
-	// {
-	// 	pthread_mutex_unlock(each->left_side_fork);
-	// 	pthread_mutex_unlock(each->right_side_fork);
-	// 	return (OTHER_PHILO_DEAD);
-	// }
 	return (OTHER_PHILO_ALIVE);
 }
 
@@ -74,6 +67,13 @@ static int	eat_philo(t_each_philo *each)
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
 	gettimeofday(&now, NULL);
 	each->last_eat_time_us = now.tv_sec * 1000000 + now.tv_usec;
+	pthread_mutex_lock(each->left_side_fork);
+	if (util_check_fin(each))
+	{
+		pthread_mutex_unlock(each->left_side_fork);
+		pthread_mutex_unlock(each->right_side_fork);
+		return (OTHER_PHILO_DEAD);
+	}
 	pthread_mutex_unlock(&(each->last_eat_mutex_t));
 	util_put_log(each, each->last_eat_time_us, CYAN, PIC_FORK);
 	util_put_log(each, each->last_eat_time_us, YELLOW, EATING);
