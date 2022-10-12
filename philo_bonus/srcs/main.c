@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 01:03:50 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 01:36:59 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,6 @@ static char	*validate_arg(int ac, char **av)
 
 static void	set_struct_philo_env(char **av, t_philo_env *philo_env)
 {
-	struct timeval	initial;
-
-	gettimeofday(&initial, NULL);
-	philo_env->initial_us = initial.tv_sec * 1000000 + initial.tv_usec;
 	philo_env->num_of_philo = util_atoi(av[1]);
 	philo_env->time_to_die = util_atoi(av[2]);
 	philo_env->time_to_eat = util_atoi(av[3]);
@@ -119,7 +115,10 @@ static bool	exe_each_philo_process(t_each_philo *each)
 {
 	int			i;
 	pthread_t	each_philo_thread;
+	struct timeval	initial;
 
+	gettimeofday(&initial, NULL);
+	each->philo_env->initial_us = initial.tv_sec * 1000000 + initial.tv_usec;
 	i = -1;
 	while (++i < each->philo_env->num_of_philo)
 	{
