@@ -31,7 +31,7 @@ void	*moni_ps_routine(void *arg)
 				sem_post(each->p_env->m_eat_ach_sem);
 			util_put_log(each, RED, now.tv_sec * 1000000 + now.tv_usec, DIED);
 			i = -1;
-			usleep(100000);
+			usleep(2000);
 		}
 		usleep(7000);
 	}
