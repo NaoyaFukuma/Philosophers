@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 12:43:08 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 12:50:40 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	set_struct_p_env(char **av, t_p_env *p_env)
 	sem_unlink(PRINTF_SEM_NAME);
 	p_env->print_sem = sem_open(PRINTF_SEM_NAME, O_CREAT, S_IRWXG, 1);
 	sem_unlink(LAST_EAT_SEM_NAME);
-	p_env->last_eat_sem = sem_open(LAST_EAT_SEM_NAME, O_CREAT, S_IRWXG, 0);
+	p_env->last_eat_sem = sem_open(LAST_EAT_SEM_NAME, O_CREAT, S_IRWXG, 1);
 	sem_unlink(M_EAT_ACH_SEM_NAME);
 	p_env->m_eat_ach_sem = sem_open(M_EAT_ACH_SEM_NAME, O_CREAT, S_IRWXG, 0);
 	p_env->pid_arry = malloc(sizeof(pid_t) * p_env->num_of_p);
