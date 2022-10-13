@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 11:45:00 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 11:49:28 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,9 @@ static bool	exe_each_p_process(t_each_p *each)
 		{
 			sem_wait(each->p_env->last_eat_sem);
 			each[i].last_eat_time_us = each->p_env->initial_us;
-			sem_post(each->p_env->last_eat_sem);
+			printf("%ld\n",each[i].last_eat_time_us);
 			util_wait_usleep(each->p_env->initial_us - 100000, 100);
+			sem_post(each->p_env->last_eat_sem);
 			if (pthread_create(&each_p_thread, NULL, each_p_routine, &each[i]))
 				util_put_error_msg_exit("Error: create pthread.");
 			if (moni_ps_routine(&each[i]))
