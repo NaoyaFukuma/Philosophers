@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 17:00:01 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 17:05:14 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ typedef struct s_each_p
 	int		p_id_num;
 	int		eat_count;
 	long	last_eat_time_us;
-	long	count;
 	sem_t	*last_eat_sem;
 }			t_each_p;
 
