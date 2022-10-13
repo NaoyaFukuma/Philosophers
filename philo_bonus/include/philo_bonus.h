@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 10:53:30 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 12:30:02 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@
 # include <unistd.h>    // for write, usleep
 
 /* sem name */
-# define FORK_SEM_NAME "FORK_sem"
-# define PRINTF_SEM_NAME "PRINTF_sem"
-# define M_EAT_COUNT_SEM_NAME "M_EAT_COUNT_sem"
-# define LAST_EAT_SEM_NAME "LAST_EAT_sem"
-# define M_EAT_ACH_SEM_NAME "M_EAT_ACH_sem"
+# define FORK_SEM_NAME "/FORK_sem"
+# define PRINTF_SEM_NAME "/PRINTF_sem"
+# define M_EAT_COUNT_SEM_NAME "/M_EAT_COUNT_sem"
+# define LAST_EAT_SEM_NAME "/LAST_EAT_sem"
+# define M_EAT_ACH_SEM_NAME "/M_EAT_ACH_sem"
 
 /* log msg */
 # define PIC_FORK " has taken a fork"

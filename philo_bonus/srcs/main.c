@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 11:50:35 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 12:22:34 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ static t_each_p	*set_struct_each_p(t_p_env *p_env)
 		each[i].p_env = p_env;
 		each[i].p_id_num = i + 1;
 		each[i].eat_count = 0;
-		// each[i].last_eat_time_us = p_env->initial_us;
 	}
 	return (each);
 }

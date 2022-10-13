@@ -46,7 +46,6 @@ void	*moni_m_eat(void *arg)
 	i = -1;
 	while (++i < each->p_env->num_of_p)
 		sem_wait(each->p_env->m_eat_ach_sem);
-	// sem_wait(each->p_env->print_sem);
 	util_kill_and_wait(each->p_env->num_of_p, each);
 	return (NULL);
 }
