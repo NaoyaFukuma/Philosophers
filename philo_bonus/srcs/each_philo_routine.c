@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 12:07:18 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 12:16:03 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,16 @@ static int	take_fork_p(t_each_p *each)
 	struct timeval	now;
 
 	sem_wait(each->p_env->fork_sem);
-	sem_wait(each->p_env->print_sem);
 	gettimeofday(&now, NULL);
+	if (util_check_last_eat_time(each, now.tv_sec * 1000000 + now.tv_usec))
+		usleep(100000);
+	sem_wait(each->p_env->print_sem);
 	util_put_log(each, MAGENTA, now.tv_sec * 1000000 + now.tv_usec, PIC_FORK);
 	sem_post(each->p_env->print_sem);
 	sem_wait(each->p_env->fork_sem);
+	gettimeofday(&now, NULL);
+	if (util_check_last_eat_time(each, now.tv_sec * 1000000 + now.tv_usec))
+		usleep(100000);
 	return (OTHER_PHILO_ALIVE);
 }
 
@@ -55,7 +60,6 @@ static int	eat_p(t_each_p *each)
 	struct timeval	now;
 
 	sem_wait(each->p_env->print_sem);
-	gettimeofday(&now, NULL);
 	util_put_log(each, CYAN, now.tv_sec * 1000000 + now.tv_usec, PIC_FORK);
 	util_put_log(each, YELLOW, now.tv_sec * 1000000 + now.tv_usec, EATING);
 	sem_wait(each->p_env->last_eat_sem);
@@ -74,8 +78,10 @@ static int	sleep_p(t_each_p *each)
 {
 	struct timeval	now;
 
-	sem_wait(each->p_env->print_sem);
 	gettimeofday(&now, NULL);
+	if (util_check_last_eat_time(each, now.tv_sec * 1000000 + now.tv_usec))
+		usleep(100000);
+	sem_wait(each->p_env->print_sem);
 	util_put_log(each, BLUE, now.tv_sec * 1000000 + now.tv_usec, SLEEPING);
 	sem_post(each->p_env->print_sem);
 	util_wait_usleep((now.tv_sec * 1000000 + now.tv_usec),
@@ -87,8 +93,10 @@ static int	think_p(t_each_p *each)
 {
 	struct timeval	now;
 
-	sem_wait(each->p_env->print_sem);
 	gettimeofday(&now, NULL);
+	if (util_check_last_eat_time(each, now.tv_sec * 1000000 + now.tv_usec))
+		usleep(100000);
+	sem_wait(each->p_env->print_sem);
 	util_put_log(each, WHITE, now.tv_sec * 1000000 + now.tv_usec, THINKING);
 	sem_post(each->p_env->print_sem);
 	return (OTHER_PHILO_ALIVE);
