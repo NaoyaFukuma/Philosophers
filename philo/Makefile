@@ -6,7 +6,7 @@
 #    By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 22:41:02 by nfukuma           #+#    #+#              #
-#    Updated: 2022/10/07 11:55:41 by nfukuma          ###   ########.fr        #
+#    Updated: 2022/10/13 16:45:08 by nfukuma          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME		=	philo
 CC		=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
 #CFLAGS		=	-g -Wall -Werror -Wextra -fsanitize=thread
+#CFLAGS		=	-g -Wall -Werror -Wextra -fsanitize=address
+
 
 # for *.c set up
 SRCS_NAME	=	main.c each_philo_routine.c moni_philos_routine.c util.c

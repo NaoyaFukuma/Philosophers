@@ -26,7 +26,7 @@ bool	start_monitar_thread(pthread_t *moni_thread, t_each_p *each)
 static void	*moni_ps_routine(void *arg)
 {
 	struct timeval	now;
-	t_each_p	*each;
+	t_each_p		*each;
 	long			i;
 
 	each = arg;
@@ -53,8 +53,7 @@ static void	*moni_ps_routine(void *arg)
 static bool	check_last_eat(t_each_p *each, long now_us)
 {
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
-	if ((now_us - each->last_eat_time_us) >= each->p_env->t_t_die
-		* 1000)
+	if ((now_us - each->last_eat_time_us) >= each->p_env->t_t_die * 1000)
 	{
 		pthread_mutex_unlock(&(each->last_eat_mutex_t));
 		return (true);

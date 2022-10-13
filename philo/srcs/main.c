@@ -6,23 +6,23 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 10:37:45 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 16:44:25 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool			validate_arg(int ac, char **av);
-static char			*start_each_p_threads(t_each_p *each);
-static void			set_struct_p_env(char **av, t_p_env *p_env);
+static bool		validate_arg(int ac, char **av);
+static char		*start_each_p_threads(t_each_p *each);
+static void		set_struct_p_env(char **av, t_p_env *p_env);
 static t_each_p	*set_struct_each_p(t_p_env *p_env);
 
 int	main(int ac, char **av)
 {
-	char			*err_msg;
+	char		*err_msg;
 	t_p_env		p_env;
 	t_each_p	*each_p_struct;
-	pthread_t		moni_thread;
+	pthread_t	moni_thread;
 
 	if (validate_arg(ac, av))
 		return (1);
@@ -46,7 +46,7 @@ int	main(int ac, char **av)
 
 static bool	validate_arg(int ac, char **av)
 {
-	int	tmp_num;
+	int		tmp_num;
 	size_t	i;
 
 	if (ac < 5 || 6 < ac)
@@ -91,7 +91,7 @@ static void	set_struct_p_env(char **av, t_p_env *p_env)
 static t_each_p	*set_struct_each_p(t_p_env *p_env)
 {
 	int				i;
-	t_each_p	*each_p_ptr;
+	t_each_p		*each_p_ptr;
 	pthread_mutex_t	*fork_mutexs;
 
 	each_p_ptr = malloc(sizeof(t_each_p) * p_env->num_of_p);
@@ -108,8 +108,8 @@ static t_each_p	*set_struct_each_p(t_p_env *p_env)
 		each_p_ptr[i].p_id_num = i + 1;
 		each_p_ptr[i].initial_us = p_env->initial_us;
 		each_p_ptr[i].right_side_fork = &fork_mutexs[i];
-		each_p_ptr[i].left_side_fork = &fork_mutexs[(i
-				+ p_env->num_of_p - 1) % p_env->num_of_p];
+		each_p_ptr[i].left_side_fork = &fork_mutexs[(i + p_env->num_of_p - 1)
+			% p_env->num_of_p];
 		each_p_ptr[i].eat_count = 0;
 		each_p_ptr[i].last_eat_time_us = p_env->initial_us;
 		pthread_mutex_init(&each_p_ptr[i].last_eat_mutex_t, NULL);
@@ -127,8 +127,8 @@ static char	*start_each_p_threads(t_each_p *each)
 		return ("Error: Memory allocation in pthread_t.");
 	i = -1;
 	while (++i < each->p_env->num_of_p)
-		if (pthread_create(&each->p_env->each_p_thread[i], NULL,
-				each_p_routine, &each[i]))
+		if (pthread_create(&each->p_env->each_p_thread[i], NULL, each_p_routine,
+				&each[i]))
 			return ("Error: create pthread.");
 	i = -1;
 	while (++i < each->p_env->num_of_p)

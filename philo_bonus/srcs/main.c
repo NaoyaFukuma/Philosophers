@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 15:15:17 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 16:44:05 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static void	set_struct_p_env(char **av, t_p_env *p_env)
 	else
 		p_env->m_eat = 0;
 	sem_unlink(FORK_SEM_NAME);
-	p_env->fork_sem = sem_open(FORK_SEM_NAME, O_CREAT, S_IRWXG, p_env->num_of_p);
+	p_env->fork_sem = sem_open(FORK_SEM_NAME, O_CREAT, S_IRWXG,
+			p_env->num_of_p);
 	sem_unlink(PRINTF_SEM_NAME);
 	p_env->print_sem = sem_open(PRINTF_SEM_NAME, O_CREAT, S_IRWXG, 1);
 	sem_unlink(LAST_EAT_SEM_NAME);
