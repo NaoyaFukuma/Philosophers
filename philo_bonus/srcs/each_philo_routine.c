@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 17:21:09 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 17:21:27 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ static int	sleep_p(t_each_p *each)
 	util_put_log(each, BLUE, now.tv_sec * 1000000 + now.tv_usec, SLEEPING);
 	sem_post(each->p_env->print_sem);
 	util_wait_usleep((now.tv_sec * 1000000 + now.tv_usec),
-			each->p_env->t_t_sleep + (each->p_env->t_t_die
-				- each->p_env->t_t_eat - each->p_env->t_t_sleep) / 2);
+		each->p_env->t_t_sleep + (each->p_env->t_t_die
+		- each->p_env->t_t_eat - each->p_env->t_t_sleep) / 2);
 	return (OTHER_PHILO_ALIVE);
 }
 
