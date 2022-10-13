@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 12:16:03 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 12:40:35 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static int	eat_p(t_each_p *each)
 	util_put_log(each, YELLOW, now.tv_sec * 1000000 + now.tv_usec, EATING);
 	sem_wait(each->p_env->last_eat_sem);
 	each->last_eat_time_us = now.tv_sec * 1000000 + now.tv_usec;
+	printf("each->last_eat_time_us %ld
+	n", each->last_eat_time_us);
 	sem_post(each->p_env->last_eat_sem);
 	sem_post(each->p_env->print_sem);
 	util_wait_usleep(now.tv_sec * 1000000 + now.tv_usec, each->p_env->t_t_eat);
