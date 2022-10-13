@@ -12,23 +12,23 @@
 
 #include "philo_bonus.h"
 
-void	*moni_philos_routine(void *arg)
+void	*moni_ps_routine(void *arg)
 {
 	struct timeval	now;
-	t_each_philo	*each;
+	t_each_p		*each;
 	long			i;
 
 	each = arg;
 	i = -1;
-	usleep(each->philo_env->time_to_die * 1000 - 5000);
+	usleep(each->p_env->t_t_die * 1000 - 5000);
 	while (true)
 	{
 		gettimeofday(&now, NULL);
 		if (util_check_last_eat_time(each, now.tv_sec * 1000000 + now.tv_usec))
 		{
-			sem_wait(each->philo_env->print_sem);
-			while (++i < each->philo_env->num_of_philo)
-				sem_post(each->philo_env->must_eat_achieve_sem);
+			sem_wait(each->p_env->print_sem);
+			while (++i < each->p_env->num_of_p)
+				sem_post(each->p_env->m_eat_ach_sem);
 			util_put_log(each, RED, now.tv_sec * 1000000 + now.tv_usec, DIED);
 			i = -1;
 			usleep(100000);
@@ -37,28 +37,28 @@ void	*moni_philos_routine(void *arg)
 	}
 }
 
-void	*moni_must_eat(void *arg)
+void	*moni_m_eat(void *arg)
 {
 	int			i;
-	t_each_philo	*each;
+	t_each_p	*each;
 
 	each = arg;
 	i = -1;
-	while (++i < each->philo_env->num_of_philo)
-		sem_wait(each->philo_env->must_eat_achieve_sem);
-	// sem_wait(each->philo_env->print_sem);
-	util_kill_and_wait(each->philo_env->num_of_philo, each);
+	while (++i < each->p_env->num_of_p)
+		sem_wait(each->p_env->m_eat_ach_sem);
+	// sem_wait(each->p_env->print_sem);
+	util_kill_and_wait(each->p_env->num_of_p, each);
 	return (NULL);
 }
 
-bool	util_check_last_eat_time(t_each_philo *each, long now_us)
+bool	util_check_last_eat_time(t_each_p *each, long now_us)
 {
-	pthread_mutex_lock(&(each->last_eat_mutex_t));
-	if ((now_us - each->last_eat_time_us) >= each->philo_env->time_to_die * 1000)
+	sem_wait(each->p_env->last_eat_sem);
+	if ((now_us - each->last_eat_time_us) >= each->p_env->t_t_die * 1000)
 	{
-		pthread_mutex_unlock(&(each->last_eat_mutex_t));
+		sem_post(each->p_env->last_eat_sem);
 		return (true);
 	}
-	pthread_mutex_unlock(&(each->last_eat_mutex_t));
+	sem_post(each->p_env->last_eat_sem);
 	return (false);
 }

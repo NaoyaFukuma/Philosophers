@@ -6,40 +6,39 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 01:44:28 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 10:46:58 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static char			*validate_arg(int ac, char **av);
-static void			set_struct_philo_env(char **av, t_philo_env *philo_env);
-static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env);
-static bool			exe_each_philo_process(t_each_philo *each);
+static char		*validate_arg(int ac, char **av);
+static void		set_struct_p_env(char **av, t_p_env *p_env);
+static t_each_p	*set_struct_each_p(t_p_env *p_env);
+static bool		exe_each_p_process(t_each_p *each);
 
 int	main(int ac, char **av)
 {
-	char			*err_msg;
-	t_philo_env		philo_env;
-	t_each_philo	*each_philo_struct;
-	pthread_t		moni_thread;
+	char		*err_msg;
+	t_p_env		p_env;
+	t_each_p	*each_p_struct;
+	pthread_t	moni_thread;
 
 	err_msg = validate_arg(ac, av);
 	if (err_msg)
 		util_put_error_msg_exit(err_msg);
-	set_struct_philo_env(av, &philo_env);
-	each_philo_struct = set_struct_each_philo(&philo_env);
-	if (!each_philo_struct)
+	set_struct_p_env(av, &p_env);
+	each_p_struct = set_struct_each_p(&p_env);
+	if (!each_p_struct)
 		util_put_error_msg_exit("Error: Memory allocation.");
-	if (exe_each_philo_process(each_philo_struct))
-		util_put_error_msg_exit("Error: exe_each_philo");
-	if (pthread_create(&moni_thread, NULL, moni_must_eat, each_philo_struct))
+	if (exe_each_p_process(each_p_struct))
+		util_put_error_msg_exit("Error: exe_each_p");
+	if (pthread_create(&moni_thread, NULL, moni_m_eat, each_p_struct))
 	{
-		util_kill_and_wait(philo_env.num_of_philo, each_philo_struct);
+		util_kill_and_wait(p_env.num_of_p, each_p_struct);
 		util_put_error_msg_exit("Error: create monitar pthread from main.");
 	}
 	pthread_join(moni_thread, NULL);
-
 	exit(EXIT_SUCCESS);
 }
 
@@ -60,82 +59,80 @@ static char	*validate_arg(int ac, char **av)
 	return (NULL);
 }
 
-static void	set_struct_philo_env(char **av, t_philo_env *philo_env)
+static void	set_struct_p_env(char **av, t_p_env *p_env)
 {
-	philo_env->num_of_philo = util_atoi(av[1]);
-	philo_env->time_to_die = util_atoi(av[2]);
-	philo_env->time_to_eat = util_atoi(av[3]);
-	philo_env->time_to_sleep = util_atoi(av[4]);
+	p_env->num_of_p = util_atoi(av[1]);
+	p_env->t_t_die = util_atoi(av[2]);
+	p_env->t_t_eat = util_atoi(av[3]);
+	p_env->t_t_sleep = util_atoi(av[4]);
 	if (av[5])
-		philo_env->must_eat = util_atoi(av[5]);
+		p_env->m_eat = util_atoi(av[5]);
 	else
-		philo_env->must_eat = 0;
+		p_env->m_eat = 0;
 	sem_unlink(FORK_SEM_NAME);
-	philo_env->fork_sem = sem_open(FORK_SEM_NAME, O_CREAT, S_IRWXG,
-			philo_env->num_of_philo);
+	p_env->fork_sem = sem_open(FORK_SEM_NAME, O_CREAT, S_IRWXG, p_env->num_of_p);
 	sem_unlink(PRINTF_SEM_NAME);
-	philo_env->print_sem = sem_open(PRINTF_SEM_NAME, O_CREAT, S_IRWXG, 1);
-	sem_unlink(MUST_EAT_ACHIEVE_SEM_NAME);
-	philo_env->must_eat_achieve_sem = sem_open(MUST_EAT_ACHIEVE_SEM_NAME,
-												O_CREAT,
-												S_IRWXG,
-												0);
-	philo_env->pid_arry = malloc(sizeof(pid_t) * philo_env->num_of_philo);
-	if (!philo_env->pid_arry)
+	p_env->print_sem = sem_open(PRINTF_SEM_NAME, O_CREAT, S_IRWXG, 1);
+	sem_unlink(M_EAT_ACH_SEM_NAME);
+	p_env->print_sem = sem_open(M_EAT_ACH_SEM_NAME, O_CREAT, S_IRWXG, 1);
+	sem_unlink(LAST_EAT_SEM_NAME);
+	p_env->print_sem = sem_open(LAST_EAT_SEM_NAME, O_CREAT, S_IRWXG, 1);
+	sem_unlink(M_EAT_ACH_SEM_NAME);
+	p_env->m_eat_ach_sem = sem_open(M_EAT_ACH_SEM_NAME, O_CREAT, S_IRWXG, 0);
+	p_env->pid_arry = malloc(sizeof(pid_t) * p_env->num_of_p);
+	if (!p_env->pid_arry)
 		util_put_error_msg_exit("Error: Memory allocation.");
 }
 
-static t_each_philo	*set_struct_each_philo(t_philo_env *philo_env)
+static t_each_p	*set_struct_each_p(t_p_env *p_env)
 {
 	int				i;
-	t_each_philo	*each_philo_ptr;
+	t_each_p		*each;
 	pthread_mutex_t	*fork_mutexs;
 
-	each_philo_ptr = malloc(sizeof(t_each_philo) * philo_env->num_of_philo);
-	fork_mutexs = malloc(sizeof(pthread_mutex_t) * philo_env->num_of_philo);
-	if ((!each_philo_ptr) || (!fork_mutexs))
+	each = malloc(sizeof(t_each_p) * p_env->num_of_p);
+	fork_mutexs = malloc(sizeof(pthread_mutex_t) * p_env->num_of_p);
+	if ((!each) || (!fork_mutexs))
 		return (NULL);
 	i = -1;
-	while (++i < philo_env->num_of_philo)
+	while (++i < p_env->num_of_p)
 		pthread_mutex_init(&fork_mutexs[i], NULL);
 	i = -1;
-	while (++i < philo_env->num_of_philo)
+	while (++i < p_env->num_of_p)
 	{
-		each_philo_ptr[i].philo_env = philo_env;
-		each_philo_ptr[i].philo_id_num = i + 1;
-		each_philo_ptr[i].eat_count = 0;
-		each_philo_ptr[i].last_eat_time_us = philo_env->initial_us;
-		pthread_mutex_init(&each_philo_ptr[i].last_eat_mutex_t, NULL);
-		pthread_mutex_init(&each_philo_ptr[i].eat_count_mutex_t, NULL);
+		each[i].p_env = p_env;
+		each[i].p_id_num = i + 1;
+		each[i].eat_count = 0;
+		each[i].last_eat_time_us = p_env->initial_us;
 	}
-	return (each_philo_ptr);
+	return (each);
 }
 
-static bool	exe_each_philo_process(t_each_philo *each)
+static bool	exe_each_p_process(t_each_p *each)
 {
-	int			i;
-	pthread_t	each_philo_thread;
+	int				i;
+	pthread_t		each_p_thread;
 	struct timeval	initial;
 
 	gettimeofday(&initial, NULL);
-	each->philo_env->initial_us = initial.tv_sec * 1000000 + initial.tv_usec + 10000;
+	each->p_env->initial_us = initial.tv_sec * 1000000 + initial.tv_usec
+		+ 10000;
 	i = -1;
-	while (++i < each->philo_env->num_of_philo)
+	while (++i < each->p_env->num_of_p)
 	{
-		each->philo_env->pid_arry[i] = fork();
-		if (each->philo_env->pid_arry[i] < 0)
+		each->p_env->pid_arry[i] = fork();
+		if (each->p_env->pid_arry[i] < 0)
 			break ;
-		if (each->philo_env->pid_arry[i] == 0)
+		if (each->p_env->pid_arry[i] == 0)
 		{
-			util_wait_usleep(each->philo_env->initial_us - 10000, 10);
-			if (pthread_create(&each_philo_thread, NULL, each_philo_routine,
-					&each[i]))
+			util_wait_usleep(each->p_env->initial_us - 10000, 10);
+			if (pthread_create(&each_p_thread, NULL, each_p_routine, &each[i]))
 				util_put_error_msg_exit("Error: create pthread.");
-			if (moni_philos_routine(&each[i]))
+			if (moni_ps_routine(&each[i]))
 				exit(EXIT_SUCCESS);
 		}
 	}
-	if (i != each->philo_env->num_of_philo)
+	if (i != each->p_env->num_of_p)
 	{
 		util_kill_and_wait(i, each);
 		return (true);
