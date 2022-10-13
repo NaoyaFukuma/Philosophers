@@ -62,3 +62,17 @@ bool	util_check_last_eat_time(t_each_p *each, long now_us)
 	sem_post(each->last_eat_sem);
 	return (false);
 }
+
+void	create_thread(t_each_p *each)
+{
+	pthread_t	each_p_thread;
+
+	sem_wait(each->last_eat_sem);
+	each->last_eat_time_us = each->p_env->initial_us;
+	sem_post(each->last_eat_sem);
+	util_wait_usleep(each->p_env->initial_us - 100000, 100);
+	if (pthread_create(&each_p_thread, NULL, each_p_routine, each))
+		util_put_error_msg_exit("Error: create pthread.");
+	if (moni_ps_routine(each))
+		exit(EXIT_SUCCESS);
+}

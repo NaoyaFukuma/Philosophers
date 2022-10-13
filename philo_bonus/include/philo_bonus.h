@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 15:14:19 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 17:00:01 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void		*each_p_routine(void *arg_each_philo_struct);
 void		*moni_ps_routine(void *arg);
 void		*moni_m_eat(void *arg);
 bool		util_check_last_eat_time(t_each_p *each, long now_us);
+void		create_thread(t_each_p *each);
 
 /* in util.c */
 void		util_put_error_msg_exit(char *err_msg);

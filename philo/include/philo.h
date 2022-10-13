@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 10:37:10 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 16:50:12 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_p_env
 
 typedef struct s_each_p
 {
-	t_p_env		*p_env;
+	t_p_env			*p_env;
 	int				p_id_num;
 	pthread_mutex_t	*right_side_fork;
 	pthread_mutex_t	*left_side_fork;
@@ -75,8 +75,8 @@ typedef struct s_each_p
 void				*each_p_routine(void *arg_each_p_struct);
 
 /* moni_philos_routine.c */
-bool				start_monitar_thread(pthread_t *moni_thread,
-						t_each_p *each);
+bool	start_monitar_thread(pthread_t *moni_thread,
+							t_each_p *each);
 
 /* in util.c */
 int					util_atoi(char *str);
