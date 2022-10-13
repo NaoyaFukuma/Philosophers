@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 11:39:40 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 11:44:11 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static bool	exe_each_p_process(t_each_p *each)
 
 	gettimeofday(&initial, NULL);
 	each->p_env->initial_us = initial.tv_sec * 1000000 + initial.tv_usec
-		+ 10000;
+		+ 100000;
 	i = -1;
 	while (++i < each->p_env->num_of_p)
 	{
@@ -126,7 +126,7 @@ static bool	exe_each_p_process(t_each_p *each)
 			sem_wait(each->p_env->last_eat_sem);
 			each[i].last_eat_time_us = each->p_env->initial_us;
 			sem_post(each->p_env->last_eat_sem);
-			util_wait_usleep(each->p_env->initial_us - 10000, 10);
+			util_wait_usleep(each->p_env->initial_us - 10000, 100);
 			if (pthread_create(&each_p_thread, NULL, each_p_routine, &each[i]))
 				util_put_error_msg_exit("Error: create pthread.");
 			if (moni_ps_routine(&each[i]))
