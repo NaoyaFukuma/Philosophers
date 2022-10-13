@@ -33,7 +33,7 @@ void	*moni_ps_routine(void *arg)
 			i = -1;
 			usleep(2000);
 		}
-		usleep(7000);
+		usleep(700);
 	}
 }
 
