@@ -52,12 +52,12 @@ void	*moni_m_eat(void *arg)
 
 bool	util_check_last_eat_time(t_each_p *each, long now_us)
 {
-	sem_wait(each->p_env->last_eat_sem);
+	sem_wait(each->last_eat_sem);
 	if ((now_us - each->last_eat_time_us) >= each->p_env->t_t_die * 1000)
 	{
-		sem_post(each->p_env->last_eat_sem);
+		sem_post(each->last_eat_sem);
 		return (true);
 	}
-	sem_post(each->p_env->last_eat_sem);
+	sem_post(each->last_eat_sem);
 	return (false);
 }

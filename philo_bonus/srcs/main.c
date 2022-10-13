@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:04 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/13 13:34:34 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/13 13:55:22 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ static t_each_p	*set_struct_each_p(t_p_env *p_env)
 		each[i].p_env = p_env;
 		each[i].p_id_num = i + 1;
 		each[i].eat_count = 0;
+		each[i].last_eat_sem = each[i].p_env->last_eat_sem;
 	}
 	return (each);
 }
@@ -122,9 +123,9 @@ static bool	exe_each_p_process(t_each_p *each)
 			break ;
 		if (each->p_env->pid_arry[i] == 0)
 		{
-			sem_wait(each->p_env->last_eat_sem);
+			sem_wait(each[i].last_eat_sem);
 			each[i].last_eat_time_us = each->p_env->initial_us;
-			sem_post(each->p_env->last_eat_sem);
+			sem_post(each[i].last_eat_sem);
 			util_wait_usleep(each->p_env->initial_us - 100000, 100);
 			if (pthread_create(&each_p_thread, NULL, each_p_routine, &each[i]))
 				util_put_error_msg_exit("Error: create pthread.");
