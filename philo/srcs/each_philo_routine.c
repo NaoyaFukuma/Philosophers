@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/16 00:58:33 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/16 01:00:18 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	*each_p_routine(void *arg_each_p_struct)
 		usleep(1000);
 	while (true)
 	{
-		if (take_left_fork_p(each))
-			return (NULL);
 		if (take_right_fork_p(each))
+			return (NULL);
+		if (take_left_fork_p(each))
 			return (NULL);
 		if (eat_p(each))
 			return (NULL);
