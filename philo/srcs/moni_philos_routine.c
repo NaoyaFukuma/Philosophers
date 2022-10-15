@@ -35,7 +35,7 @@ static void	*moni_ps_routine(void *arg)
 		gettimeofday(&now, NULL);
 		while (++i < each->p_env->num_of_p)
 		{
-			if (util_check_fin(&each[i]))
+			if (util_check_fin(&each[i], now))
 				return (NULL);
 			if (check_last_eat(&each[i], now.tv_sec * 1000000 + now.tv_usec))
 			{
