@@ -68,5 +68,6 @@ void	set_finish_flag_and_put_log(t_each_p *each, struct timeval now)
 	each->p_env->finish_flag = true;
 	pthread_mutex_unlock(&(each->p_env->fin_flag_mutex_t));
 	usleep(50);
+	printf("debug\n");
 	util_put_log(each, now, RED, DIED);
 }
