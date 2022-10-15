@@ -39,7 +39,9 @@ static void	*moni_ps_routine(void *arg)
 				return (NULL);
 			if (check_last_eat(&each[i], now.tv_sec * 1000000 + now.tv_usec))
 			{
+				pthread_mutex_lock(&each->p_env->printf_mutex_t);
 				set_finish_flag_and_put_log(each, now);
+				pthread_mutex_unlock(&each->p_env->printf_mutex_t);
 				return (NULL);
 			}
 		}
@@ -65,14 +67,5 @@ void	set_finish_flag_and_put_log(t_each_p *each, struct timeval now)
 	pthread_mutex_lock(&(each->p_env->fin_flag_mutex_t));
 	each->p_env->finish_flag = true;
 	pthread_mutex_unlock(&(each->p_env->fin_flag_mutex_t));
-	usleep(50);
-	pthread_mutex_lock(&each->p_env->printf_mutex_t);
-	if (each->p_id_num == 1)
-	{
-
-		printf("id 1 time  %ld\n", ((now.tv_sec * 1000000 + now.tv_usec) - each->last_eat_time_us) / 1000);
-	}
-
-	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, RED, DIED);
-	pthread_mutex_unlock(&each->p_env->printf_mutex_t);
+	util_put_log(each, now, RED, DIED);
 }
