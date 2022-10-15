@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/16 01:05:49 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/16 01:06:54 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	sleep_p(t_each_p *each)
 	if (++each->eat_count == each->p_env->m_eat)
 	{
 		pthread_mutex_lock(&(each->p_env->m_eat_mutex_t));
-		if (++each->p_env->m_eat_achive_count >=
+		if (++each->p_env->m_eat_achive_count >= \
 			each->p_env->num_of_p)
 			each->p_env->finish_flag = true;
 		pthread_mutex_unlock(&(each->p_env->m_eat_mutex_t));
