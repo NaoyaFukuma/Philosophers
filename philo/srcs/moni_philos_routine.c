@@ -68,7 +68,10 @@ void	set_finish_flag_and_put_log(t_each_p *each, struct timeval now)
 	usleep(50);
 	pthread_mutex_lock(&each->p_env->printf_mutex_t);
 	if (each->p_id_num == 1)
-		printf("id 1 last eat %ld\n",each->last_eat_time_us);
+	{
+
+		printf("id 1 time  %ld\n", (now.tv_sec * 1000000 + now.tv_usec) - each->last_eat_time_us / 1000);
+	}
 
 	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, RED, DIED);
 	pthread_mutex_unlock(&each->p_env->printf_mutex_t);
