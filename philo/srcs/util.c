@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 19:13:02 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/15 19:19:01 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,6 @@ void	util_wait_usleep(long start_time_us, long wait_time_ms)
 
 bool	util_check_fin(t_each_p *each, struct timeval now)
 {
-	if (check_last_eat(each, now.tv_sec * 1000000 + now.tv_usec))
-	{
-		set_finish_flag_and_put_log(each, now);
-		return (true);
-	}
 	pthread_mutex_lock(&(each->p_env->fin_flag_mutex_t));
 	if (each->p_env->finish_flag == OTHER_PHILO_DEAD)
 	{
@@ -75,6 +70,11 @@ bool	util_check_fin(t_each_p *each, struct timeval now)
 		return (true);
 	}
 	pthread_mutex_unlock(&(each->p_env->fin_flag_mutex_t));
+	if (check_last_eat(each, now.tv_sec * 1000000 + now.tv_usec))
+	{
+		set_finish_flag_and_put_log(each, now);
+		return (true);
+	}
 	return (false);
 }
 
