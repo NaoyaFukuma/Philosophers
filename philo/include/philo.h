@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/16 00:54:01 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/16 00:56:47 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ bool				start_monitar_thread(pthread_t *moni_thread,
 bool				check_last_eat(t_each_p *each, long now_us);
 void				set_finish_flag_and_put_log(t_each_p *each,
 						struct timeval now);
-int					take_left_fork_p(t_each_p *each)
+int					take_left_fork_p(t_each_p *each);
 
 /* in util.c */
 int					util_atoi(char *str);
