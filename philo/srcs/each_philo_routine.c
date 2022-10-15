@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 16:23:28 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/15 16:26:49 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static int	eat_p(t_each_p *each)
 		set_finish_flag_and_put_log(each, now);
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
 	each->last_eat_time_us = now.tv_sec * 1000000 + now.tv_usec;
+	printf("id %d each->last_eat_time_us == [%ld]",each->p_id_num,each->last_eat_time_us);
 	pthread_mutex_unlock(&(each->last_eat_mutex_t));
 	util_put_log(each, each->last_eat_time_us, CYAN, PIC_FORK);
 	util_put_log(each, each->last_eat_time_us, YELLOW, EATING);
