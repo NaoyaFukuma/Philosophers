@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 16:29:01 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/15 16:35:49 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static int	eat_p(t_each_p *each)
 
 	pthread_mutex_lock(&each->p_env->printf_mutex_t);
 	gettimeofday(&now, NULL);
+		printf("id %d debug7\n", each->p_id_num);
 	if (check_last_eat(each, now.tv_sec * 1000000 + now.tv_usec))
 		set_finish_flag_and_put_log(each, now);
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
