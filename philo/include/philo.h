@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 18:13:23 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/15 19:56:42 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ void				set_finish_flag_and_put_log(t_each_p *each,
 
 /* in util.c */
 int					util_atoi(char *str);
-void				util_put_log(t_each_p *each, struct timeval now, char *color,
+void				util_put_log(t_each_p *each, long now_us, char *color,
 						char *msg);
 void				util_wait_usleep(long start_time_us, long wait_time_ms);
-bool				util_check_fin(t_each_p *each, struct timeval now);
+bool				util_check_fin(t_each_p *each);
 void				util_all_free(t_each_p *each);
 
 #endif

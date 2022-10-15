@@ -35,8 +35,15 @@ static void	*moni_ps_routine(void *arg)
 		gettimeofday(&now, NULL);
 		while (++i < each->p_env->num_of_p)
 		{
-			if (util_check_fin(&each[i], now))
+			if (util_check_fin(&each[i]))
 				return (NULL);
+			if (check_last_eat(&each[i], now.tv_sec * 1000000 + now.tv_usec))
+			{
+				pthread_mutex_lock(&each->p_env->printf_mutex_t);
+				set_finish_flag_and_put_log(each, now);
+				pthread_mutex_unlock(&each->p_env->printf_mutex_t);
+				return (NULL);
+			}
 		}
 		i = -1;
 		usleep(7000);
@@ -60,7 +67,6 @@ void	set_finish_flag_and_put_log(t_each_p *each, struct timeval now)
 	pthread_mutex_lock(&(each->p_env->fin_flag_mutex_t));
 	each->p_env->finish_flag = true;
 	pthread_mutex_unlock(&(each->p_env->fin_flag_mutex_t));
-	printf("debug\n");
 	usleep(50);
-	util_put_log(each, now, RED, DIED);
+	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, RED, DIED);
 }
