@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 19:56:32 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/16 00:48:51 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	util_put_log(t_each_p *each, long now_us, char *color, char *msg)
 	if (util_check_fin(each) && msg != DIED)
 		return ;
 	printf("%s%ld\t%d%s\e[m\n", color, (now_us - each->initial_us) / 1000,
-			each->p_id_num, msg);
+		each->p_id_num, msg);
 	return ;
 }
 

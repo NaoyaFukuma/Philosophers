@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 20:51:20 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/16 00:55:45 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ void	*each_p_routine(void *arg_each_p_struct)
 		usleep(1000);
 	while (true)
 	{
-		if (take_fork_p(each))
+		if (take_left_fork_p(each))
+			return (NULL);
+		if (take_right_fork_p(each))
 			return (NULL);
 		if (eat_p(each))
 			return (NULL);
@@ -37,7 +39,7 @@ void	*each_p_routine(void *arg_each_p_struct)
 	}
 }
 
-static int	take_fork_p(t_each_p *each)
+static int	take_left_fork_p(t_each_p *each)
 {
 	struct timeval	now;
 
@@ -59,36 +61,15 @@ static int	take_fork_p(t_each_p *each)
 	}
 	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, MAGENTA, PIC_FORK);
 	pthread_mutex_unlock(&each->p_env->printf_mutex_t);
-	if (each->p_env->num_of_p == 1)
-	{
-		pthread_mutex_unlock(each->right_side_fork);
-		return (OTHER_PHILO_DEAD);
-	}
-	pthread_mutex_lock(each->left_side_fork);
-	pthread_mutex_lock(&each->p_env->printf_mutex_t);
-	if (util_check_fin(each))
-	{
-		pthread_mutex_unlock(each->left_side_fork);
-		pthread_mutex_unlock(each->right_side_fork);
-		pthread_mutex_unlock(&each->p_env->printf_mutex_t);
-		return (OTHER_PHILO_DEAD);
-	}
 	return (OTHER_PHILO_ALIVE);
 }
+
+
 
 static int	eat_p(t_each_p *each)
 {
 	struct timeval	now;
 
-	gettimeofday(&now, NULL);
-	if (check_last_eat(each, now.tv_sec * 1000000 + now.tv_usec))
-		{
-		pthread_mutex_unlock(each->left_side_fork);
-		pthread_mutex_unlock(each->right_side_fork);
-		pthread_mutex_unlock(&each->p_env->printf_mutex_t);
-		set_finish_flag_and_put_log(each, now);
-		return (OTHER_PHILO_DEAD);
-	}
 	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, CYAN, PIC_FORK);
 	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, YELLOW, EATING);
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
