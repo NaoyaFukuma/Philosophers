@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 18:17:01 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/15 19:01:21 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,13 @@ static int	take_fork_p(t_each_p *each)
 	}
 	pthread_mutex_lock(each->left_side_fork);
 	pthread_mutex_lock(&each->p_env->printf_mutex_t);
+	return (OTHER_PHILO_ALIVE);
+}
+
+static int	eat_p(t_each_p *each)
+{
+	struct timeval	now;
+
 	gettimeofday(&now, NULL);
 	if (util_check_fin(each, now))
 	{
@@ -67,13 +74,6 @@ static int	take_fork_p(t_each_p *each)
 		pthread_mutex_lock(&each->p_env->printf_mutex_t);
 		return (OTHER_PHILO_DEAD);
 	}
-	return (OTHER_PHILO_ALIVE);
-}
-
-static int	eat_p(t_each_p *each)
-{
-	struct timeval	now;
-
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
 	each->last_eat_time_us = now.tv_sec * 1000000 + now.tv_usec;
 	pthread_mutex_unlock(&(each->last_eat_mutex_t));
