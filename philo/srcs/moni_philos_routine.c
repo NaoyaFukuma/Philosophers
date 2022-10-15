@@ -12,9 +12,7 @@
 
 #include "philo.h"
 
-static bool	check_last_eat(t_each_p *each, long now_us);
 static void	*moni_ps_routine(void *arg);
-static void	set_finish_flag_and_put_log(t_each_p *each, struct timeval now);
 
 bool	start_monitar_thread(pthread_t *moni_thread, t_each_p *each)
 {
@@ -50,7 +48,7 @@ static void	*moni_ps_routine(void *arg)
 	}
 }
 
-static bool	check_last_eat(t_each_p *each, long now_us)
+bool	check_last_eat(t_each_p *each, long now_us)
 {
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
 	if ((now_us - each->last_eat_time_us) >= each->p_env->t_t_die * 1000)
@@ -62,7 +60,7 @@ static bool	check_last_eat(t_each_p *each, long now_us)
 	return (false);
 }
 
-static void	set_finish_flag_and_put_log(t_each_p *each, struct timeval now)
+void	set_finish_flag_and_put_log(t_each_p *each, struct timeval now)
 {
 	pthread_mutex_lock(&(each->p_env->fin_flag_mutex_t));
 	each->p_env->finish_flag = true;
