@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/16 00:57:49 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/16 00:58:33 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	*each_p_routine(void *arg_each_p_struct)
 	}
 }
 
-static int	take_left_fork_p(t_each_p *each)
+static int	take_right_fork_p(t_each_p *each)
 {
 	struct timeval	now;
 
