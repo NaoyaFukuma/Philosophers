@@ -56,7 +56,7 @@ bool	check_last_eat(t_each_p *each, long now_us)
 		pthread_mutex_unlock(&(each->last_eat_mutex_t));
 		return (true);
 	}
-	printf("\ndebug4 id %d\n", each->p_id_num);
+	printf("id %d debug4\n", each->p_id_num);
 	pthread_mutex_unlock(&(each->last_eat_mutex_t));
 	return (false);
 }
