@@ -37,13 +37,6 @@ static void	*moni_ps_routine(void *arg)
 		{
 			if (util_check_fin(&each[i], now))
 				return (NULL);
-			if (check_last_eat(&each[i], now.tv_sec * 1000000 + now.tv_usec))
-			{
-				pthread_mutex_lock(&each->p_env->printf_mutex_t);
-				set_finish_flag_and_put_log(each, now);
-				pthread_mutex_unlock(&each->p_env->printf_mutex_t);
-				return (NULL);
-			}
 		}
 		i = -1;
 		usleep(7000);
