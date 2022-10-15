@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 16:22:28 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/15 16:23:28 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static int	take_fork_p(t_each_p *each)
 	gettimeofday(&now, NULL);
 	if (check_last_eat(each, now.tv_sec * 1000000 + now.tv_usec))
 		set_finish_flag_and_put_log(each, now);
-	printf("\ndebug4 id %d\n", each->p_id_num);
 	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, MAGENTA, PIC_FORK);
 	pthread_mutex_unlock(&each->p_env->printf_mutex_t);
 	if (each->p_env->num_of_p == 1)
