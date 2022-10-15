@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 16:20:30 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/15 16:21:37 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,16 @@ static int	take_fork_p(t_each_p *each)
 {
 	struct timeval	now;
 
-	printf("\ndebug id %d\n", each->p_id_num);
+	printf("\ndebug1 id %d\n", each->p_id_num);
 	pthread_mutex_lock(each->right_side_fork);
+	printf("\ndebug2 id %d\n", each->p_id_num);
 	pthread_mutex_lock(&each->p_env->printf_mutex_t);
+	printf("\ndebug3 id %d\n", each->p_id_num);
 	gettimeofday(&now, NULL);
 	if (check_last_eat(each, now.tv_sec * 1000000 + now.tv_usec))
 		set_finish_flag_and_put_log(each, now);
 	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, MAGENTA, PIC_FORK);
+	printf("\ndebug4 id %d\n", each->p_id_num);
 	pthread_mutex_unlock(&each->p_env->printf_mutex_t);
 	if (each->p_env->num_of_p == 1)
 	{
