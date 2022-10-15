@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 16:11:49 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/15 16:16:20 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static int	take_fork_p(t_each_p *each)
 	{
 		pthread_mutex_unlock(each->left_side_fork);
 		pthread_mutex_unlock(each->right_side_fork);
-		pthread_mutex_unlock(&each->last_eat_mutex_t);
 		return (OTHER_PHILO_DEAD);
 	}
 	return (OTHER_PHILO_ALIVE);

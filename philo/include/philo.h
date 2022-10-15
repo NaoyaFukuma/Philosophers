@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 22:41:00 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 16:07:54 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/15 16:13:37 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void				*each_p_routine(void *arg_each_p_struct);
 
 /* moni_philos_routine.c */
 bool				start_monitar_thread(pthread_t *moni_thread,
-							t_each_p *each);
+						t_each_p *each);
 bool				check_last_eat(t_each_p *each, long now_us);
 void				set_finish_flag_and_put_log(t_each_p *each,
 						struct timeval now);
