@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 23:28:32 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 19:19:01 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/15 19:33:50 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ bool	util_check_fin(t_each_p *each, struct timeval now)
 	pthread_mutex_unlock(&(each->p_env->fin_flag_mutex_t));
 	if (check_last_eat(each, now.tv_sec * 1000000 + now.tv_usec))
 	{
+		pthread_mutex_lock(&each->p_env->printf_mutex_t);
 		set_finish_flag_and_put_log(each, now);
+		pthread_mutex_unlock(&each->p_env->printf_mutex_t);
 		return (true);
 	}
 	return (false);
