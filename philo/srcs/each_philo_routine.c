@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/16 01:02:55 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/16 01:05:49 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	eat_p(t_each_p *each)
 
 	gettimeofday(&now, NULL);
 	if (check_last_eat(each, now.tv_sec * 1000000 + now.tv_usec))
-		{
+	{
 		pthread_mutex_unlock(each->left_side_fork);
 		pthread_mutex_unlock(each->right_side_fork);
 		pthread_mutex_unlock(&each->p_env->printf_mutex_t);
@@ -94,7 +94,7 @@ static int	sleep_p(t_each_p *each)
 	if (++each->eat_count == each->p_env->m_eat)
 	{
 		pthread_mutex_lock(&(each->p_env->m_eat_mutex_t));
-		if (++each->p_env->m_eat_achive_count >= \
+		if (++each->p_env->m_eat_achive_count >=
 			each->p_env->num_of_p)
 			each->p_env->finish_flag = true;
 		pthread_mutex_unlock(&(each->p_env->m_eat_mutex_t));
@@ -107,7 +107,8 @@ static int	sleep_p(t_each_p *each)
 	gettimeofday(&now, NULL);
 	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, BLUE, SLEEPING);
 	pthread_mutex_unlock(&each->p_env->printf_mutex_t);
-	util_wait_usleep(now.tv_sec * 1000000 + now.tv_usec, each->p_env->t_t_sleep);
+	util_wait_usleep(now.tv_sec * 1000000 + now.tv_usec,
+		each->p_env->t_t_sleep);
 	return (OTHER_PHILO_ALIVE);
 }
 
