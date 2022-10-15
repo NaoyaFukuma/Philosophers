@@ -73,8 +73,6 @@ void	set_finish_flag_and_put_log(t_each_p *each, struct timeval now)
 
 int	take_left_fork_p(t_each_p *each)
 {
-	struct timeval	now;
-
 	if (each->p_env->num_of_p == 1)
 	{
 		pthread_mutex_unlock(each->right_side_fork);
