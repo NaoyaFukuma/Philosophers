@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 16:35:49 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/15 16:38:53 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,11 @@ static int	take_fork_p(t_each_p *each)
 {
 	struct timeval	now;
 
-	printf("id %d debug1\n", each->p_id_num);
 	pthread_mutex_lock(each->right_side_fork);
-	printf("id %d debug2\n", each->p_id_num);
-	pthread_mutex_lock(&each->p_env->printf_mutex_t);
-	printf("id %d debug3\n", each->p_id_num);
 	gettimeofday(&now, NULL);
 	if (check_last_eat(each, now.tv_sec * 1000000 + now.tv_usec))
 		set_finish_flag_and_put_log(each, now);
+	pthread_mutex_lock(&each->p_env->printf_mutex_t);
 	util_put_log(each, now.tv_sec * 1000000 + now.tv_usec, MAGENTA, PIC_FORK);
 	pthread_mutex_unlock(&each->p_env->printf_mutex_t);
 	if (each->p_env->num_of_p == 1)
@@ -70,15 +67,13 @@ static int	eat_p(t_each_p *each)
 {
 	struct timeval	now;
 
-	pthread_mutex_lock(&each->p_env->printf_mutex_t);
 	gettimeofday(&now, NULL);
-		printf("id %d debug7\n", each->p_id_num);
 	if (check_last_eat(each, now.tv_sec * 1000000 + now.tv_usec))
 		set_finish_flag_and_put_log(each, now);
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
 	each->last_eat_time_us = now.tv_sec * 1000000 + now.tv_usec;
-	printf("id %d each->last_eat_time_us == [%ld]\n",each->p_id_num,each->last_eat_time_us);
 	pthread_mutex_unlock(&(each->last_eat_mutex_t));
+	pthread_mutex_lock(&each->p_env->printf_mutex_t);
 	util_put_log(each, each->last_eat_time_us, CYAN, PIC_FORK);
 	util_put_log(each, each->last_eat_time_us, YELLOW, EATING);
 	pthread_mutex_unlock(&each->p_env->printf_mutex_t);
