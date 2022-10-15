@@ -6,7 +6,7 @@
 /*   By: nfukuma <nfukuma@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:03:01 by nfukuma           #+#    #+#             */
-/*   Updated: 2022/10/15 16:19:37 by nfukuma          ###   ########.fr       */
+/*   Updated: 2022/10/15 16:20:30 by nfukuma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	take_fork_p(t_each_p *each)
 {
 	struct timeval	now;
 
-	printf("\ndebug\n");
+	printf("\ndebug id %d\n", each->p_id_num);
 	pthread_mutex_lock(each->right_side_fork);
 	pthread_mutex_lock(&each->p_env->printf_mutex_t);
 	gettimeofday(&now, NULL);
