@@ -50,8 +50,8 @@ static void	*moni_ps_routine(void *arg)
 
 bool	check_last_eat(t_each_p *each, long now_us)
 {
-	printf("\ndebug4 id %d\n", each->p_id_num);
 	pthread_mutex_lock(&(each->last_eat_mutex_t));
+	printf("\ndebug4 id %d\n", each->p_id_num);
 	if ((now_us - each->last_eat_time_us) >= each->p_env->t_t_die * 1000)
 	{
 		pthread_mutex_unlock(&(each->last_eat_mutex_t));
